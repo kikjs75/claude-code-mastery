@@ -40,6 +40,8 @@
 - 'git workflow' 키워드로 검색하면 Git 전략을 더 자세히 알 수 있음.
 - Claude code 통해서 bug 브랜치를 main 브랜치에 병합
 프롬프트: hotfix/결제-오류 브랜치를 main브랜치로 merge 해주세요!
+- Claude code 통해서 develop 브랜치를 main 브랜치에 병합
+프롬프트: develop 브랜치를 main으로 병합해주세요!
 ```
 
 ====================================
