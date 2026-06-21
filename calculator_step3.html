@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산기 - Step 3: JavaScript 로직</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .calculator {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .display {
+            background: #2d3748;
+            color: #48bb78;
+            font-size: 2.5rem;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: right;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .number {
+            background: #f7fafc;
+            color: #2d3748;
+            border: 2px solid #e2e8f0;
+        }
+
+        .number:hover {
+            background: #edf2f7;
+        }
+
+        .operator {
+            background: #667eea;
+            color: white;
+        }
+
+        .operator:hover {
+            background: #5568d3;
+        }
+
+        .equals {
+            background: #48bb78;
+            color: white;
+            grid-column: span 2;
+        }
+
+        .equals:hover {
+            background: #38a169;
+        }
+
+        .clear {
+            background: #f56565;
+            color: white;
+            grid-column: span 2;
+        }
+
+        .clear:hover {
+            background: #e53e3e;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="appendOperator('/')">÷</button>
+            <button class="operator" onclick="appendOperator('*')">×</button>
+
+            <button class="number" onclick="appendNumber('7')">7</button>
+            <button class="number" onclick="appendNumber('8')">8</button>
+            <button class="number" onclick="appendNumber('9')">9</button>
+            <button class="operator" onclick="appendOperator('-')">−</button>
+
+            <button class="number" onclick="appendNumber('4')">4</button>
+            <button class="number" onclick="appendNumber('5')">5</button>
+            <button class="number" onclick="appendNumber('6')">6</button>
+            <button class="operator" onclick="appendOperator('+')">+</button>
+
+            <button class="number" onclick="appendNumber('1')">1</button>
+            <button class="number" onclick="appendNumber('2')">2</button>
+            <button class="number" onclick="appendNumber('3')">3</button>
+            <button class="number" onclick="toggleSign()">±</button>
+
+            <button class="number" style="grid-column: span 2;" onclick="appendNumber('0')">0</button>
+            <button class="number" onclick="appendDecimal()">.</button>
+            <button class="equals" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== 상태 관리 (State) =====
+        let display = document.getElementById('display');
+        let currentInput = '0';        // 현재 화면에 보이는 숫자
+        let previousInput = '';       // 이전에 입력한 숫자
+        let operator = null;          // 선택된 연산자 (+, -, *, /)
+        let shouldResetDisplay = false; // 다음 숫자 입력 시 화면을 초기화할지 여부
+
+        // ===== 함수 1: 화면 업데이트 =====
+        function updateDisplay() {
+            // 화면에 긴 숫자는 생략 표시
+            display.textContent = currentInput.length > 15
+                ? currentInput.substring(0, 15) + '...'
+                : currentInput;
+        }
+
+        // ===== 함수 2: 숫자 입력 =====
+        function appendNumber(num) {
+            if (shouldResetDisplay) {
+                // 이전에 연산자를 눌렀으면, 새로운 숫자로 시작
+                currentInput = num;
+                shouldResetDisplay = false;
+            } else {
+                // 연산자를 누르지 않았으면, 기존 숫자에 추가
+                if (currentInput === '0' && num !== '.') {
+                    // '0'만 있을 때는 새 숫자로 대체 (0012 방지)
+                    currentInput = num;
+                } else {
+                    currentInput += num;
+                }
+            }
+            updateDisplay();
+        }
+
+        // ===== 함수 3: 연산자 입력 =====
+        function appendOperator(op) {
+            // 이전에 연산자가 있고, 아직 계산하지 않았으면 먼저 계산
+            if (operator !== null && !shouldResetDisplay) {
+                calculate();
+            }
+            previousInput = currentInput;  // 현재 입력을 "이전 입력"으로 저장
+            operator = op;                 // 연산자 저장
+            shouldResetDisplay = true;     // 다음 입력 시 화면 초기화
+        }
+
+        // ===== 함수 4: 소수점 입력 =====
+        function appendDecimal() {
+            if (shouldResetDisplay) {
+                // 연산자 후에는 "0." 으로 시작
+                currentInput = '0.';
+                shouldResetDisplay = false;
+            } else if (!currentInput.includes('.')) {
+                // 이미 소수점이 있으면 추가하지 않음
+                currentInput += '.';
+            }
+            updateDisplay();
+        }
+
+        // ===== 함수 5: 부호 변경 =====
+        function toggleSign() {
+            if (currentInput !== '0') {
+                // 음수를 양수로, 양수를 음수로
+                currentInput = currentInput.startsWith('-')
+                    ? currentInput.substring(1)
+                    : '-' + currentInput;
+                updateDisplay();
+            }
+        }
+
+        // ===== 함수 6: 실제 계산 수행 =====
+        function calculate() {
+            if (operator === null || shouldResetDisplay) return;
+
+            let result;
+            const prev = parseFloat(previousInput);
+            const current = parseFloat(currentInput);
+
+            // 연산자에 따라 계산
+            switch (operator) {
+                case '+':
+                    result = prev + current;
+                    break;
+                case '-':
+                    result = prev - current;
+                    break;
+                case '*':
+                    result = prev * current;
+                    break;
+                case '/':
+                    // 0으로 나누는 것 방지
+                    result = current === 0 ? 'Error' : prev / current;
+                    break;
+                default:
+                    return;
+            }
+
+            currentInput = result.toString();
+            operator = null;
+            shouldResetDisplay = true;
+            updateDisplay();
+        }
+
+        // ===== 함수 7: 초기화 =====
+        function clearDisplay() {
+            currentInput = '0';
+            previousInput = '';
+            operator = null;
+            shouldResetDisplay = false;
+            updateDisplay();
+        }
+
+        // 초기 화면 표시
+        updateDisplay();
+
+        // ===== 보너스: 키보드 지원 =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key >= '0' && e.key <= '9') appendNumber(e.key);
+            if (e.key === '.') appendDecimal();
+            if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') appendOperator(e.key);
+            if (e.key === 'Enter' || e.key === '=') calculate();
+            if (e.key === 'Escape' || e.key.toLowerCase() === 'c') clearDisplay();
+        });
+    </script>
+</body>
+</html>

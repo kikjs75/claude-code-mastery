@@ -1,0 +1,15 @@
+{
+  "name": "calculator-example",
+  "version": "1.0.0",
+  "description": "Claude Code Todo 기능 시연용 계산기 예제",
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test dist/calculator.test.js",
+    "dev": "ts-node src/calculator.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.0.0",
+    "@types/node": "^20.0.0"
+  }
+}

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="김진수 | Frontend Developer 포트폴리오" />
+  <meta property="og:title" content="김진수 | Frontend Developer" />
+  <meta property="og:description" content="사용자 경험을 중시하는 프론트엔드 개발자입니다." />
+  <meta property="og:type" content="website" />
+  <title>김진수 | Frontend Developer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'Noto Sans KR', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+
+  <script>document.documentElement.classList.add('dark');</script>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="transition-colors duration-300">
+
+  <div id="scroll-progress"></div>
+
+  <!-- Navbar -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <nav class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="#hero" class="text-xl font-bold accent-icon tracking-tight">JK.</a>
+
+      <ul class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <li><a href="#about"      class="nav-link transition-colors">About</a></li>
+        <li><a href="#skills"     class="nav-link transition-colors">Skills</a></li>
+        <li><a href="#experience" class="nav-link transition-colors">Experience</a></li>
+        <li><a href="#projects"   class="nav-link transition-colors">Projects</a></li>
+        <li><a href="#education"  class="nav-link transition-colors">Education</a></li>
+        <li><a href="#social"     class="nav-link transition-colors">Social</a></li>
+        <li><a href="#contact"    class="nav-link transition-colors">Contact</a></li>
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" class="p-2 rounded-lg transition-colors" aria-label="테마 전환">
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
+        </button>
+        <button id="menu-toggle" class="md:hidden p-2 rounded-lg transition-colors" aria-label="메뉴 열기"
+                style="color: var(--color-text-muted)">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 모바일 메뉴 -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 text-xl font-medium translate-x-full transition-transform duration-300"
+       style="background-color: var(--color-bg)">
+    <button id="menu-close" class="absolute top-4 right-4 p-2" aria-label="메뉴 닫기"
+            style="color: var(--color-text-muted)">
+      <i class="fa-solid fa-xmark text-2xl"></i>
+    </button>
+    <a href="#about"      class="mobile-nav-link">About</a>
+    <a href="#skills"     class="mobile-nav-link">Skills</a>
+    <a href="#experience" class="mobile-nav-link">Experience</a>
+    <a href="#projects"   class="mobile-nav-link">Projects</a>
+    <a href="#education"  class="mobile-nav-link">Education</a>
+    <a href="#social"     class="mobile-nav-link">Social</a>
+    <a href="#contact"    class="mobile-nav-link">Contact</a>
+  </div>
+
+  <main>
+    <!-- Hero -->
+    <section id="hero" class="min-h-screen flex items-center pt-16">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 w-full text-center">
+        <div data-animate>
+          <p class="text-sm font-semibold mb-5 tracking-widest uppercase accent-icon">안녕하세요</p>
+          <h1 class="text-5xl sm:text-7xl font-bold mb-3 leading-tight tracking-tight">
+            김진수
+          </h1>
+          <p class="text-xl sm:text-2xl font-medium mb-5" style="color: var(--color-text-muted)">
+            Jin-su Kim
+          </p>
+          <div class="text-xl sm:text-2xl font-semibold mb-6 h-9 flex items-center justify-center gap-1">
+            <span id="typing-text" class="accent-icon"></span><span class="typing-cursor"></span>
+          </div>
+          <p class="max-w-xl mx-auto mb-8 leading-relaxed" style="color: var(--color-text-muted)">
+            사용자 경험을 중시하는 프론트엔드 개발자입니다.<br />
+            클린 코드와 성능 최적화에 관심이 많습니다.
+          </p>
+
+          <!-- 통계 Pills -->
+          <div class="flex flex-wrap justify-center gap-3 mb-8">
+            <div class="stat-pill">
+              <span class="stat-value">3년</span>
+              <span class="stat-label">경력</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-value">10+</span>
+              <span class="stat-label">프로젝트</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-value">13</span>
+              <span class="stat-label">기술스택</span>
+            </div>
+          </div>
+
+          <!-- CTA 버튼 -->
+          <div class="flex flex-wrap justify-center gap-4 mb-10">
+            <a href="#contact" class="btn-primary">연락하기</a>
+            <a href="#" class="btn-secondary">이력서 다운로드</a>
+          </div>
+
+          <!-- 소셜 아이콘 -->
+          <div class="flex justify-center gap-3">
+            <a href="https://github.com"    target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://youtube.com"   target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://linkedin.com"  target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-24 section-alt">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="mb-12" data-animate>
+          <p class="section-label">ABOUT</p>
+          <h2 class="section-heading">저에 대해</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="flex justify-center" data-animate>
+            <img src="https://picsum.photos/seed/face/400/400" alt="김진수"
+                 class="w-64 h-64 object-cover rounded-2xl"
+                 style="box-shadow: 0 0 0 1px var(--color-border), 0 0 40px rgba(0,209,122,0.06)" />
+          </div>
+          <div data-animate data-delay="100">
+            <p class="text-lg leading-relaxed mb-4" style="color: var(--color-text-muted)">
+              3년 경력의 프론트엔드 개발자로, React와 Vue 기반의 웹 애플리케이션을 주로 개발해 왔습니다.
+              클린 코드와 성능 최적화에 관심이 많으며, 팀과의 협업을 통해 더 나은 결과를 만들어가는 것을 좋아합니다.
+            </p>
+            <p class="text-lg leading-relaxed mb-8" style="color: var(--color-text-muted)">
+              사용자 중심의 UI/UX 개발을 추구하며, 지속적인 학습을 통해 최신 기술 트렌드를 따라가고 있습니다.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="badge">문제해결</span>
+              <span class="badge">팀워크</span>
+              <span class="badge">커뮤니케이션</span>
+              <span class="badge">성능 최적화</span>
+              <span class="badge">사용자 중심 사고</span>
+              <span class="badge">지속적 학습</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="py-24">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="mb-12" data-animate>
+          <p class="section-label">SKILLS</p>
+          <h2 class="section-heading">기술 스택</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="skill-card" data-animate>
+            <h3 class="text-base font-semibold mb-6 flex items-center gap-2 skill-category-title">
+              <i class="fa-solid fa-desktop"></i> Frontend
+            </h3>
+            <div class="space-y-4">
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">HTML / CSS</span><span class="accent-icon font-medium">95%</span></div><div class="progress-track"><div class="progress-bar" data-width="95"></div></div></div>
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">JavaScript</span><span class="accent-icon font-medium">90%</span></div><div class="progress-track"><div class="progress-bar" data-width="90"></div></div></div>
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">React</span><span class="accent-icon font-medium">88%</span></div><div class="progress-track"><div class="progress-bar" data-width="88"></div></div></div>
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">TypeScript</span><span class="accent-icon font-medium">80%</span></div><div class="progress-track"><div class="progress-bar" data-width="80"></div></div></div>
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">Tailwind CSS</span><span class="accent-icon font-medium">85%</span></div><div class="progress-track"><div class="progress-bar" data-width="85"></div></div></div>
+            </div>
+          </div>
+          <div class="skill-card" data-animate data-delay="100">
+            <h3 class="text-base font-semibold mb-6 flex items-center gap-2 skill-category-title">
+              <i class="fa-solid fa-server"></i> Backend
+            </h3>
+            <div class="space-y-4">
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">Node.js</span><span class="accent-icon font-medium">70%</span></div><div class="progress-track"><div class="progress-bar" data-width="70"></div></div></div>
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">Express</span><span class="accent-icon font-medium">65%</span></div><div class="progress-track"><div class="progress-bar" data-width="65"></div></div></div>
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">Python</span><span class="accent-icon font-medium">65%</span></div><div class="progress-track"><div class="progress-bar" data-width="65"></div></div></div>
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">REST API</span><span class="accent-icon font-medium">80%</span></div><div class="progress-track"><div class="progress-bar" data-width="80"></div></div></div>
+            </div>
+          </div>
+          <div class="skill-card" data-animate data-delay="200">
+            <h3 class="text-base font-semibold mb-6 flex items-center gap-2 skill-category-title">
+              <i class="fa-solid fa-wrench"></i> Tools
+            </h3>
+            <div class="space-y-4">
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">Git / GitHub</span><span class="accent-icon font-medium">90%</span></div><div class="progress-track"><div class="progress-bar" data-width="90"></div></div></div>
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">Figma</span><span class="accent-icon font-medium">75%</span></div><div class="progress-track"><div class="progress-bar" data-width="75"></div></div></div>
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">VS Code</span><span class="accent-icon font-medium">95%</span></div><div class="progress-track"><div class="progress-bar" data-width="95"></div></div></div>
+              <div><div class="flex justify-between text-sm mb-2"><span style="color:var(--color-text)">Docker</span><span class="accent-icon font-medium">60%</span></div><div class="progress-track"><div class="progress-bar" data-width="60"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="py-24 section-alt">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="mb-12" data-animate>
+          <p class="section-label">EXPERIENCE</p>
+          <h2 class="section-heading">경력 사항</h2>
+        </div>
+        <div class="relative pl-8 timeline-line space-y-12">
+          <div class="relative" data-animate>
+            <div class="timeline-dot"></div>
+            <span class="date-badge">2022.03 ~ 현재</span>
+            <h3 class="text-xl font-bold mt-3 mb-1">ABC 테크</h3>
+            <p class="font-medium mb-4 role-title">Frontend Developer</p>
+            <ul class="space-y-2" style="color: var(--color-text-muted)">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check accent-icon mt-1 text-xs shrink-0"></i>React 기반 사내 관리자 대시보드 개발</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check accent-icon mt-1 text-xs shrink-0"></i>웹 성능 최적화로 로딩 속도 40% 개선</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check accent-icon mt-1 text-xs shrink-0"></i>디자인 시스템 구축 및 컴포넌트 라이브러리 관리</li>
+            </ul>
+          </div>
+          <div class="relative" data-animate data-delay="100">
+            <div class="timeline-dot"></div>
+            <span class="date-badge">2020.07 ~ 2022.02</span>
+            <h3 class="text-xl font-bold mt-3 mb-1">XYZ 스타트업</h3>
+            <p class="font-medium mb-4 role-title">Web Developer</p>
+            <ul class="space-y-2" style="color: var(--color-text-muted)">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check accent-icon mt-1 text-xs shrink-0"></i>반응형 랜딩 페이지 10+ 개발</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check accent-icon mt-1 text-xs shrink-0"></i>REST API 연동 및 상태 관리 구현</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check accent-icon mt-1 text-xs shrink-0"></i>크로스 브라우저 호환성 이슈 해결</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="py-24">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="mb-12" data-animate>
+          <p class="section-label">PROJECTS</p>
+          <h2 class="section-heading">프로젝트</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div class="project-card" data-animate>
+            <div class="project-icon-area gradient-shop">
+              <i class="fa-solid fa-cart-shopping accent-icon"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-2">쇼핑몰 웹앱</h3>
+            <p class="text-sm mb-4 flex-1" style="color: var(--color-text-muted)">React와 Node.js 기반의 풀스택 쇼핑몰. MongoDB를 활용한 상품 관리 및 결제 기능 구현.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">MongoDB</span>
+            </div>
+            <div class="flex gap-4">
+              <a href="#" class="project-link"><i class="fa-brands fa-github"></i> GitHub</a>
+              <a href="#" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a>
+            </div>
+          </div>
+          <div class="project-card" data-animate data-delay="100">
+            <div class="project-icon-area gradient-weather">
+              <i class="fa-solid fa-cloud-sun accent-icon"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-2">날씨 대시보드</h3>
+            <p class="text-sm mb-4 flex-1" style="color: var(--color-text-muted)">OpenWeather API를 활용한 실시간 날씨 정보 대시보드. 위치 기반 날씨 및 7일 예보 제공.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tech-tag">JavaScript</span><span class="tech-tag">OpenWeather API</span><span class="tech-tag">Chart.js</span>
+            </div>
+            <div class="flex gap-4">
+              <a href="#" class="project-link"><i class="fa-brands fa-github"></i> GitHub</a>
+              <a href="#" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a>
+            </div>
+          </div>
+          <div class="project-card" data-animate data-delay="200">
+            <div class="project-icon-area gradient-portfolio">
+              <i class="fa-solid fa-code accent-icon"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-2">포트폴리오 사이트</h3>
+            <p class="text-sm mb-4 flex-1" style="color: var(--color-text-muted)">순수 HTML/CSS/JS로 제작된 개인 포트폴리오. 다크모드, 타이핑 애니메이션 등 인터랙션 구현.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span>
+            </div>
+            <div class="flex gap-4">
+              <a href="#" class="project-link"><i class="fa-brands fa-github"></i> GitHub</a>
+              <a href="#" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="py-24 section-alt">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="mb-12" data-animate>
+          <p class="section-label">EDUCATION</p>
+          <h2 class="section-heading">학력 및 자격증</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="skill-card" data-animate>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="p-3 rounded-xl shrink-0 edu-icon-wrap">
+                <i class="fa-solid fa-graduation-cap text-2xl accent-icon"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold">한국대학교</h3>
+                <p class="font-medium accent-icon">컴퓨터공학과</p>
+              </div>
+            </div>
+            <p class="text-sm mb-1" style="color: var(--color-text-muted)">2016.03 ~ 2020.02</p>
+            <p class="font-medium">학사 졸업</p>
+          </div>
+          <div class="skill-card" data-animate data-delay="100">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="p-3 rounded-xl shrink-0 edu-icon-wrap">
+                <i class="fa-solid fa-certificate text-2xl accent-icon"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold">자격증</h3>
+                <p class="font-medium accent-icon">Certifications</p>
+              </div>
+            </div>
+            <ul class="space-y-3">
+              <li class="flex items-center gap-3" style="color: var(--color-text-muted)">
+                <i class="fa-solid fa-check-circle accent-icon"></i>정보처리기사
+              </li>
+              <li class="flex items-center gap-3" style="color: var(--color-text-muted)">
+                <i class="fa-solid fa-check-circle accent-icon"></i>AWS Cloud Practitioner
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Links -->
+    <section id="social" class="py-24">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="mb-4" data-animate>
+          <p class="section-label">SOCIAL</p>
+          <h2 class="section-heading">소셜 미디어</h2>
+        </div>
+        <p class="mb-12" style="color: var(--color-text-muted)" data-animate data-delay="100">다양한 채널에서 저를 만나보세요.</p>
+
+        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-5 mb-5">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-card group" data-animate>
+            <div class="social-card-icon" style="background-color: #161b22"><i class="fa-brands fa-github"></i></div>
+            <h3 class="text-base font-bold mb-1">GitHub</h3>
+            <p class="text-sm mb-1" style="color: var(--color-text-muted)">@jinsukim</p>
+            <p class="text-xs flex-1" style="color: var(--color-text-dim)">오픈소스 프로젝트 & 코드</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm visit-link group-hover:gap-2 transition-all">방문하기 <i class="fa-solid fa-arrow-right text-xs"></i></span>
+          </a>
+          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-card group" data-animate data-delay="100">
+            <div class="social-card-icon bg-red-600"><i class="fa-brands fa-youtube"></i></div>
+            <h3 class="text-base font-bold mb-1">YouTube</h3>
+            <p class="text-sm mb-1" style="color: var(--color-text-muted)">@jinsukim_dev</p>
+            <p class="text-xs flex-1" style="color: var(--color-text-dim)">개발 튜토리얼 & 코딩 영상</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm visit-link group-hover:gap-2 transition-all">방문하기 <i class="fa-solid fa-arrow-right text-xs"></i></span>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-card group" data-animate data-delay="200">
+            <div class="social-card-icon instagram-gradient"><i class="fa-brands fa-instagram"></i></div>
+            <h3 class="text-base font-bold mb-1">Instagram</h3>
+            <p class="text-sm mb-1" style="color: var(--color-text-muted)">@jinsukim.dev</p>
+            <p class="text-xs flex-1" style="color: var(--color-text-dim)">개발 일상 & 작업물 공유</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm visit-link group-hover:gap-2 transition-all">방문하기 <i class="fa-solid fa-arrow-right text-xs"></i></span>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-card group" data-animate data-delay="300">
+            <div class="social-card-icon bg-blue-700"><i class="fa-brands fa-linkedin-in"></i></div>
+            <h3 class="text-base font-bold mb-1">LinkedIn</h3>
+            <p class="text-sm mb-1" style="color: var(--color-text-muted)">김진수</p>
+            <p class="text-xs flex-1" style="color: var(--color-text-dim)">커리어 & 네트워킹</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm visit-link group-hover:gap-2 transition-all">방문하기 <i class="fa-solid fa-arrow-right text-xs"></i></span>
+          </a>
+        </div>
+
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-card group" data-animate>
+            <div class="social-card-icon" style="background-color: #1a1a1a"><i class="fa-brands fa-x-twitter"></i></div>
+            <h3 class="text-base font-bold mb-1">X (Twitter)</h3>
+            <p class="text-sm mb-1" style="color: var(--color-text-muted)">@jinsukim_dev</p>
+            <p class="text-xs flex-1" style="color: var(--color-text-dim)">기술 트렌드 & 개발 인사이트</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm visit-link group-hover:gap-2 transition-all">방문하기 <i class="fa-solid fa-arrow-right text-xs"></i></span>
+          </a>
+          <a href="https://velog.io" target="_blank" rel="noopener noreferrer" class="social-card group" data-animate data-delay="100">
+            <div class="social-card-icon" style="background-color: #1cb98f"><i class="fa-solid fa-v"></i></div>
+            <h3 class="text-base font-bold mb-1">Velog</h3>
+            <p class="text-sm mb-1" style="color: var(--color-text-muted)">@jinsukim</p>
+            <p class="text-xs flex-1" style="color: var(--color-text-dim)">기술 블로그 & 아티클</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm visit-link group-hover:gap-2 transition-all">방문하기 <i class="fa-solid fa-arrow-right text-xs"></i></span>
+          </a>
+          <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="social-card group" data-animate data-delay="200">
+            <div class="social-card-icon bg-indigo-500"><i class="fa-brands fa-discord"></i></div>
+            <h3 class="text-base font-bold mb-1">Discord</h3>
+            <p class="text-sm mb-1" style="color: var(--color-text-muted)">jinsukim#1234</p>
+            <p class="text-xs flex-1" style="color: var(--color-text-dim)">개발 커뮤니티 & 소통</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm visit-link group-hover:gap-2 transition-all">방문하기 <i class="fa-solid fa-arrow-right text-xs"></i></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 section-alt">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="mb-12" data-animate>
+          <p class="section-label">CONTACT</p>
+          <h2 class="section-heading">연락하기</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12">
+          <div data-animate>
+            <p class="text-lg leading-relaxed mb-8" style="color: var(--color-text-muted)">
+              새로운 기회나 협업에 관심이 있으신가요?<br />언제든지 연락해 주세요!
+            </p>
+            <div class="space-y-4 mb-8">
+              <a href="mailto:jinsu@example.com"
+                 class="flex items-center gap-3 transition-colors"
+                 style="color: var(--color-text-muted)"
+                 onmouseover="this.style.color='var(--color-accent)'"
+                 onmouseout="this.style.color='var(--color-text-muted)'">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 edu-icon-wrap">
+                  <i class="fa-solid fa-envelope accent-icon"></i>
+                </div>
+                jinsu@example.com
+              </a>
+              <div class="flex items-center gap-3" style="color: var(--color-text-muted)">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 edu-icon-wrap">
+                  <i class="fa-solid fa-location-dot accent-icon"></i>
+                </div>
+                서울, 대한민국
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <a href="https://github.com"    target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+              <a href="https://youtube.com"   target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+              <a href="https://linkedin.com"  target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <form id="contact-form" class="space-y-5" data-animate data-delay="100" novalidate>
+            <div>
+              <label for="name" class="block text-sm font-medium mb-2">이름 <span style="color:var(--color-negative)">*</span></label>
+              <input type="text" id="name" name="name" placeholder="홍길동" class="form-input" />
+              <span class="error-msg" id="name-error"></span>
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium mb-2">이메일 <span style="color:var(--color-negative)">*</span></label>
+              <input type="email" id="email" name="email" placeholder="example@email.com" class="form-input" />
+              <span class="error-msg" id="email-error"></span>
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-medium mb-2">메시지 <span style="color:var(--color-negative)">*</span></label>
+              <textarea id="message" name="message" rows="5" placeholder="안녕하세요! 협업 제안이 있습니다..." class="form-input resize-none"></textarea>
+              <span class="error-msg" id="message-error"></span>
+            </div>
+            <button type="submit" id="submit-btn" class="btn-primary w-full py-3">
+              메시지 전송
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-8 footer-bar">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center text-sm" style="color: var(--color-text-muted)">
+      <p>© 2026 김진수. All rights reserved.</p>
+      <div class="flex justify-center gap-4 mt-4">
+        <a href="https://github.com"    target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white" aria-label="GitHub"><i class="fa-brands fa-github text-lg"></i></a>
+        <a href="https://youtube.com"   target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-red-500" aria-label="YouTube"><i class="fa-brands fa-youtube text-lg"></i></a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-pink-500" aria-label="Instagram"><i class="fa-brands fa-instagram text-lg"></i></a>
+        <a href="https://linkedin.com"  target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-blue-400" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in text-lg"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="back-to-top"
+          class="fixed bottom-6 right-6 p-3 shadow-lg z-30"
+          aria-label="맨 위로 가기">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산기 - Step 1: HTML 구조</title>
+</head>
+<body>
+    <div class="calculator">
+        <!-- 계산 결과를 보여주는 화면 -->
+        <div class="display" id="display">0</div>
+
+        <!-- 버튼들을 그리드로 배열 -->
+        <div class="buttons">
+            <!-- 첫 번째 행: 초기화, 나누기, 곱하기 -->
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="appendOperator('/')">÷</button>
+            <button onclick="appendOperator('*')">×</button>
+
+            <!-- 두 번째 행: 7, 8, 9, 빼기 -->
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button onclick="appendOperator('-')">−</button>
+
+            <!-- 세 번째 행: 4, 5, 6, 더하기 -->
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button onclick="appendOperator('+')">+</button>
+
+            <!-- 네 번째 행: 1, 2, 3, 부호변경 -->
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button onclick="toggleSign()">±</button>
+
+            <!-- 다섯 번째 행: 0(2칸), 소수점, 계산 -->
+            <button onclick="appendNumber('0')">0</button>
+            <button onclick="appendDecimal()">.</button>
+            <button onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        // 여기에 JavaScript 로직이 들어갑니다 (다음 단계에서)
+    </script>
+</body>
+</html>
