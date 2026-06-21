@@ -42,6 +42,8 @@
 프롬프트: hotfix/결제-오류 브랜치를 main브랜치로 merge 해주세요!
 - Claude code 통해서 develop 브랜치를 main 브랜치에 병합
 프롬프트: develop 브랜치를 main으로 병합해주세요!
+
+- 프롬프트: claude code를 활용한 git 브랜치 워크플로우를 가이드해주세요!
 ```
 
 ====================================
