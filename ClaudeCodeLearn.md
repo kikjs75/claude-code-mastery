@@ -28,10 +28,63 @@
 
 ====================================
 ```
+<< 설정 파일 - settings.json - Bash 와일드 카드, JSON 스키마 설정 >>
+1) Bash 와일드 카드
+- Bash: 터미널에서 컴퓨터에게 명령을 내리는 언어
+- 참조: https://code.claude.com/docs/ko/permissions
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(git commit *)",
+      "Bash(git * main)",
+      "Bash(* --version)",
+      "Bash(* --help *)"
+    ],
+    "deny": [
+      "Bash(git push *)"
+    ]
+  }
+}
+
+2) JSON 스키마 설정
+- 참조: https://code.claude.com/docs/ko/settings
+- JSON 스키마를 지정하면 특정 필드(model)를 입력할 때 가능한 값들을 자동으로 제시해줍니다. JSON 스키마를 지정하면 IDE의 자동완성 기능이 활성화되어 오타를 방지합니다.
 ```
 
 ====================================
 ```
+<< 설정 파일 - settings.json >>
+1) 사용자 설정: ~/.claude/settings.json
+2) 프로젝트 설정
+  - [프로젝트 디렉토리]/.claude/settings.json: 형상관리. 팀과 공유.
+  - [프로젝트 디렉토리]/.claude/settings.local.json: 형상관리 X, 개인.
+3) 엔터프라이즈 배포의 경우, 엔터프라이즈 관리 정책 설정
+  - macOS: /Library/Application Support/ClaudeCode/managed-settings.json
+  - Linux 및 WSL: /etc/claude-code/managed-settings.json
+  - Windows: C:\ProgramData\ClaudeCode\managed-settings.json
+
+# 우선순위: 엔터프라이즈 관리 정책 설정 > 프로젝트 설정 > 사용자 설정
+# 공식문서: https://code.claude.com/docs/ko/settings
+
+# 권한 설정
+- defaultMode: claude Code를 열 때 기본 권한 모드입니다. 유효한 값: default, acceptEdits, plan, auto, dontAsk, bypassPermissions | "plan"
+- additionalDirectories: Claude가 액세스할 수 있는 추가 작업 디렉토리입니다. 대부분의 .claude/ 구성은 이러한 디렉토리에서 발견되지 않습니다 | [ "../docs/" ]
+
+# 민감한 파일 제외
+- API 키, 비밀 및 환경 파일과 같은 민감한 정보가 포함된 파일에서 Claude Code가 액세스하는 것을 방지하려면 .claude/settings.json 파일에서 permissions.deny 설정을 사용합니다:
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./config/credentials.json)",
+      "Read(./build)"
+    ]
+  }
+}
+이는 더 이상 사용되지 않는 ignorePatterns 구성을 대체합니다. 이러한 패턴과 일치하는 파일은 파일 검색 및 검색 결과에서 제외되며 이러한 파일에 대한 읽기 작업이 거부됩니다.
 ```
 
 ====================================
@@ -44,6 +97,407 @@
 프롬프트: develop 브랜치를 main으로 병합해주세요!
 
 - 프롬프트: claude code를 활용한 git 브랜치 워크플로우를 가이드해주세요!
+
+====================================
+<< Git 브랜치 워크플로우 가이드 >>
+
+[ 1. 기본 개념 ]
+
+Git Flow 전략:
+  - main: 프로덕션 배포 가능한 안정 버전
+  - develop: 개발 중인 버전
+  - feature/*: 새로운 기능 개발 (develop에서 분기)
+  - hotfix/*: 긴급 버그 수정 (main에서 분기)
+  - release/*: 배포 준비 (develop에서 분기)
+
+[ 2. 워크플로우 단계별 프롬프트 ]
+
+1️⃣ 새로운 기능 개발 시작
+  프롬프트: "feature/로그인-기능 브랜치 생성하고 체크아웃해줘"
+  Claude Code 실행:
+    $ git checkout -b feature/로그인-기능
+    $ git branch -a  (생성 확인)
+
+2️⃣ 기능 개발 완료 후 커밋
+  프롬프트: "로그인 폼 HTML, CSS, JavaScript 작성 완료. 커밋해줘"
+  Claude Code가 수행:
+    - 변경사항 확인 (git status, git diff)
+    - 파일 스테이징 (git add)
+    - 커밋 메시지 생성 및 커밋
+
+3️⃣ develop 브랜치에 기능 병합
+  프롬프트: "feature/로그인-기능 브랜치를 develop에 병합해줘"
+  Claude Code 실행:
+    $ git checkout develop
+    $ git merge feature/로그인-기능
+
+4️⃣ 완료된 feature 브랜치 삭제
+  프롬프트: "feature/로그인-기능 브랜치 삭제해줘"
+  Claude Code 실행:
+    $ git branch -d feature/로그인-기능
+
+5️⃣ hotfix 긴급 패치
+  프롬프트: "hotfix/결제-오류 브랜치 생성하고, 버그를 수정해줘"
+  Claude Code가 수행:
+    - hotfix 브랜치 생성
+    - 버그 수정 코드 작성
+    - 테스트 및 커밋
+
+6️⃣ hotfix를 main과 develop에 병합
+  프롬프트: "hotfix/결제-오류 브랜치를 main으로 merge하고, develop에도 merge해줘"
+  Claude Code 실행:
+    $ git checkout main
+    $ git merge hotfix/결제-오류
+    $ git checkout develop
+    $ git merge hotfix/결제-오류
+
+[ 3. 병합 전 확인 사항 ]
+
+병합 전 체크리스트:
+  ✅ 현재 브랜치 확인: git status
+  ✅ 변경사항 저장: 모든 파일 커밋 완료
+  ✅ 병합할 브랜치 확인: git branch -a
+  ✅ 대상 브랜치 최신화: git pull origin develop (또는 main)
+  ✅ 충돌 가능성 미리 체크
+
+프롬프트 예시:
+  "develop 브랜치 최신 상태 확인하고, feature/새로운-기능을 develop에 병합해줘"
+
+[ 4. 병합 충돌 해결 ]
+
+충돌 발생 시:
+  프롬프트: "develop 브랜치로 병합할 때 충돌이 발생했어. 해결해줘"
+  
+Claude Code가 수행:
+  1. 충돌 파일 표시 (<<<<<<, ======, >>>>>>)
+  2. 충돌 부분 수정
+  3. 병합 완료: git add . && git commit -m "병합 충돌 해결"
+
+[ 5. Pull Request (PR) 생성 및 병합 ]
+
+📌 PR이란?
+  - Pull Request는 GitHub, GitLab, Bitbucket 같은 플랫폼에서 제공하는 협업 기능
+  - Git 자체에는 없고, "코드 리뷰 후 병합"을 가능하게 하는 웹 기반 도구
+  - 개인 프로젝트: 로컬 merge만 가능
+  - 팀 협업: PR로 리뷰, 토론, 자동 테스트 후 병합
+
+5-1. PR과 로컬 Merge의 차이
+
+로컬 Merge (자동 병합):
+  $ git merge feature/로그인
+  ❌ 리뷰 불가, 토론 불가, 기록 남지 않음
+  
+GitHub PR (검토 병합):
+  1. PR 생성 → GitHub 웹사이트에서 요청
+  2. 코드 리뷰 → 팀원이 검토 및 피드백
+  3. 수정 → 피드백 반영해서 커밋
+  4. 승인 후 병합 → 최종 병합 실행
+  ✅ 리뷰 O, 토론 O, 기록 O, 자동 테스트 O
+
+5-2. 실전 PR 워크플로우 (단계별)
+
+Step 1️⃣: 로컬에서 기능 개발
+  프롬프트: "feature/로그인-기능 브랜치 생성해줘"
+  $ git checkout -b feature/로그인-기능
+  
+  [개발자가 코드 작성...]
+  
+  프롬프트: "로그인 폼 완성했어. 커밋해줘"
+  $ git add .
+  $ git commit -m "feat: 로그인 폼 추가"
+
+Step 2️⃣: 원격에 푸시 (GitHub에 업로드)
+  프롬프트: "feature/로그인-기능 브랜치를 원격에 푸시해줘"
+  $ git push -u origin feature/로그인-기능
+  
+  ✅ GitHub에 feature/로그인-기능 브랜치 생성됨
+
+Step 3️⃣: GitHub에서 PR 생성
+  프롬프트: "feature/로그인-기능을 main으로 PR 생성해줘"
+  
+  Claude Code 실행:
+    $ gh pr create --title "로그인 기능 추가" \
+                   --body "사용자 인증 폼을 구현했습니다"
+  
+  GitHub 웹사이트 화면:
+  ┌──────────────────────────────────┐
+  │ Pull Request #42                 │
+  ├──────────────────────────────────┤
+  │ feature/로그인-기능 → main       │
+  │                                  │
+  │ 제목: 로그인 기능 추가            │
+  │ 설명: 사용자 인증 폼을 구현...   │
+  │                                  │
+  │ 📋 변경된 파일:                 │
+  │   ├ index.html (+50 -10)        │
+  │   ├ css/style.css (+20 -5)      │
+  │   └ js/auth.js (+100 -0)        │
+  │                                  │
+  │ 👤 Reviewer 필요                 │
+  │ 🔴 리뷰 대기 중...              │
+  └──────────────────────────────────┘
+
+Step 4️⃣: 팀원의 코드 리뷰 (GitHub에서)
+  
+  Team Lead가 PR을 열어서:
+  
+  js/auth.js 라인 45:
+    💬 "비밀번호를 평문으로 전송하나요? 
+        HTTPS인지 확인 필요합니다"
+  
+  개발자의 답변:
+    ✅ "네, HTTPS로 안전하게 전송합니다"
+  
+  다른 코멘트:
+    💬 "변수명이 좀 더 명확했으면..."
+    
+  개발자가 수정:
+    프롬프트: "변수명 수정해줄게. 다시 커밋해줘"
+    $ git add .
+    $ git commit -m "refactor: 변수명 명확하게 수정"
+    $ git push origin feature/로그인-기능
+    → PR이 자동으로 업데이트됨
+
+Step 5️⃣: 리뷰 완료 및 승인
+  
+  Team Lead:
+    ✔️ "코드 좋습니다. 승인합니다!"
+    [Approve 버튼 클릭]
+  
+  프롬프트: "PR #42 승인되었으니 main에 병합해줘"
+  Claude Code 실행:
+    $ gh pr merge 42 --merge
+  
+  ✅ PR이 닫혀지고 main 브랜치에 병합됨
+
+Step 6️⃣: 로컬 정리
+  
+  프롬프트: "develop 최신화하고, feature/로그인-기능 브랜치 삭제해줘"
+  $ git checkout main
+  $ git pull origin main
+  $ git branch -d feature/로그인-기능
+  
+  ✅ 작업 완료!
+
+5-3. Claude Code로 PR 관리하기
+
+PR 생성:
+  프롬프트: "feature/결제 브랜치를 원격에 푸시하고 
+            develop으로의 PR을 생성해줘. 
+            제목: '결제 기능 추가', 설명: '신용카드, 계좌이체 지원'"
+  
+  $ git push -u origin feature/결제
+  $ gh pr create --title "결제 기능 추가" \
+                 --body "신용카드, 계좌이체 지원"
+
+PR 상태 확인:
+  프롬프트: "PR #50의 현재 상태를 보여줘"
+  $ gh pr view 50
+  
+  출력:
+    - PR 번호, 제목, 설명
+    - 리뷰 상태 (대기/승인/변경 요청)
+    - CI/CD 테스트 결과
+    - 코멘트 개수
+
+PR 리뷰 코멘트 확인:
+  프롬프트: "PR #50에서 팀원들의 코멘트를 보여줘"
+  $ gh pr view 50 --comments
+
+PR 승인:
+  프롬프트: "PR #50을 코드 리뷰 후 승인해줘"
+  $ gh pr review 50 --approve
+
+PR 병합:
+  프롬프트: "PR #50을 main에 병합해줘"
+  $ gh pr merge 50
+  
+  또는 특정 병합 전략:
+  $ gh pr merge 50 --merge      # 일반 merge
+  $ gh pr merge 50 --squash     # squash merge
+  $ gh pr merge 50 --rebase     # rebase merge
+
+PR 닫기 (병합 안 함):
+  프롬프트: "PR #50을 병합하지 말고 닫아줘"
+  $ gh pr close 50
+
+5-4. 병합 전략 (merge strategy)
+
+1. Merge (일반 병합):
+  $ git merge feature/로그인
+  
+  커밋 기록:
+  ──────────────────────────
+  main    ●─────○ Merge branch 'feature/로그인'
+          ╱     ╱
+  feature ●─●─●
+  ──────────────────────────
+  
+  장점: ✅ 전체 개발 과정을 볼 수 있음
+  단점: ❌ 커밋 기록이 많아짐
+
+2. Squash (압축 병합):
+  $ git merge --squash feature/로그인
+  
+  커밋 기록:
+  ──────────────────────────
+  main    ●─● (모든 커밋을 1개로 압축)
+          ╱
+  feature ●─●─●
+  ──────────────────────────
+  
+  장점: ✅ 깔끔한 커밋 기록
+  단점: ❌ 개발 과정 정보 손실
+
+3. Rebase (재기반 설정):
+  $ git merge --rebase feature/로그인
+  
+  커밋 기록:
+  ──────────────────────────
+  main    ●─●─●─● (feature 커밋이 main 위에 순서대로)
+             ╱
+  feature ●─●─●
+  ──────────────────────────
+  
+  장점: ✅ 선형적이고 깔끔한 기록
+  단점: ❌ 보안에 민감함 (공개 브랜치는 금지)
+
+5-5. 실전 PR 체크리스트
+
+PR 생성 전:
+  ✅ 브랜치명 명확한가? (feature/기능명)
+  ✅ 모든 변경사항 커밋했는가?
+  ✅ 로컬 테스트 통과했는가?
+  ✅ 불필요한 파일 추가 안 했는가? (.env, node_modules 등)
+
+PR 생성 시:
+  ✅ 제목이 명확한가? (30자 이내)
+  ✅ 설명에 변경 내용을 기술했는가?
+  ✅ 관련 Issue 번호 링크했는가? (#123)
+  ✅ 스크린샷/동영상 첨부했는가? (UI 변경 시)
+
+PR 리뷰 중:
+  ✅ 모든 코멘트 해결했는가?
+  ✅ 필요한 수정 반영했는가?
+  ✅ 충돌 없는가?
+  ✅ CI/CD 테스트 통과했는가?
+
+PR 병합 전:
+  ✅ 최소 1명 이상 승인했는가?
+  ✅ 리뷰 대기 중인 항목 없는가?
+  ✅ develop 최신 상태인가?
+  ✅ 병합 후 배포 필요한가?
+
+5-6. PR 예제 (한국어 템플릿)
+
+프롬프트:
+  "다음 정보로 PR을 생성해줘:
+   - 브랜치: feature/장바구니
+   - 대상: develop
+   - 제목: 장바구니 기능 추가
+   - 설명:
+     ## 변경사항
+     - 장바구니 추가/삭제 기능
+     - 상품 수량 조절 기능
+     
+     ## 테스트 방법
+     1. 상품 페이지에서 장바구니 추가 버튼 클릭
+     2. 장바구니 페이지 이동
+     3. 수량 조절 및 삭제 테스트
+     
+     ## 스크린샷
+     [추가 예정]
+     
+     Fixes #15"
+
+결과:
+  GitHub PR 페이지:
+  ┌─────────────────────────────────┐
+  │ PR #123                         │
+  ├─────────────────────────────────┤
+  │ feature/장바구니 → develop      │
+  │                                 │
+  │ ## 변경사항                     │
+  │ - 장바구니 추가/삭제 기능      │
+  │ - 상품 수량 조절 기능           │
+  │                                 │
+  │ ## 테스트 방법                  │
+  │ 1. 상품 페이지에서 추가 클릭   │
+  │ 2. 장바구니 페이지 이동        │
+  │ 3. 수량 조절 및 삭제 테스트    │
+  │                                 │
+  │ 🔗 Fixes #15                    │
+  │                                 │
+  │ [요청된 변경 대기 중...]       │
+  └─────────────────────────────────┘
+
+[ 6. 브랜치 상태 조회 ]
+
+현재 상태 확인:
+  프롬프트: "현재 git 상태와 모든 브랜치 목록을 보여줘"
+  Claude Code 실행:
+    $ git status
+    $ git branch -a
+    $ git log --oneline -5
+
+[ 7. 워크플로우 자동화 팁 ]
+
+✨ 효율적인 프롬프트 작성:
+  - 명확한 목표: "develop을 main에 병합"
+  - 구체적인 브랜치: "feature/결제" (O) vs "브랜치 병합" (X)
+  - 이전/이후 작업 포함: "병합 후 PR 생성하고, 로컬 브랜치 삭제"
+  - 검증 포함: "병합 후 최종 상태 확인"
+
+통합 프롬프트 예시:
+  "다음을 순서대로 해줘:
+   1. develop 브랜치 최신화
+   2. feature/새로운-기능을 develop에 병합
+   3. 병합 결과 확인
+   4. 원격에 푸시
+   5. feature/새로운-기능 로컬 브랜치 삭제"
+
+[ 8. 커밋 메시지 컨벤션 (Claude Code 활용) ]
+
+좋은 커밋 메시지 작성:
+  프롬프트: "변경사항을 커밋하는데, 메시지는 관례에 맞게 작성해줘"
+  
+패턴:
+  - feat: 새로운 기능 (feat: 로그인 폼 추가)
+  - fix: 버그 수정 (fix: 버튼 클릭 오류 수정)
+  - docs: 문서화 (docs: README 업데이트)
+  - style: 코드 스타일 (style: 들여쓰기 수정)
+  - refactor: 리팩토링 (refactor: 함수명 변경)
+  - test: 테스트 추가 (test: 로그인 테스트 작성)
+
+[ 9. 실전 예제 ]
+
+시나리오 1: 새 기능 개발 완료까지의 전체 흐름
+  1. "feature/장바구니 브랜치 생성해줘"
+  2. [로컬에서 기능 개발]
+  3. "장바구니 기능 작성 완료. 커밋해줘"
+  4. "feature/장바구니를 develop에 병합하고, 원격에 푸시해줘"
+  5. "feature/장바구니 로컬 브랜치 삭제"
+
+시나리오 2: hotfix → main + develop 병합
+  1. "hotfix/보안-패치 브랜치 생성해줘"
+  2. [보안 패치 코드 작성]
+  3. "보안 패치 커밋해줘"
+  4. "hotfix/보안-패치를 main과 develop에 모두 병합해줘"
+
+[ 10. 주의사항 ]
+
+❌ 피해야 할 패턴:
+  - main 브랜치에서 직접 개발 (항상 feature 브랜치 사용)
+  - 커밋하지 않고 브랜치 전환 (git status로 항상 확인)
+  - 병합 전 pull 하지 않기 (충돌 방지)
+  - 불명확한 커밋 메시지 ("수정됨" vs "로그인 폼 유효성 검사 개선")
+
+✅ 안전한 패턴:
+  - 각 작업별 별도 브랜치 생성
+  - 한 브랜치 = 한 기능/버그
+  - 병합 전 항상 최신 상태 확인
+  - 커밋 메시지는 구체적으로
+
 ```
 
 ====================================
