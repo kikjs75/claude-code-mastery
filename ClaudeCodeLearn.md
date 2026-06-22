@@ -12,6 +12,14 @@
 
 ====================================
 ```
+<< Auto Memory >>
+- 자동 저장보다 이렇게 '~을 Auto memory에 저장해줘.' 수동으로 명시해야 저장.
+- The directory contains a MEMORY.md entrypoint and optional topic files:
+~/.claude/projects/<project>/memory/
+├── MEMORY.md          # Concise index, loaded into every session
+├── debugging.md       # Detailed notes on debugging patterns
+├── api-conventions.md # API design decisions
+└── ...                # Any other topic files Claude creates
 ```
 
 ====================================
