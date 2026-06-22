@@ -16,14 +16,327 @@
 
 ====================================
 ```
+<< .claude/rules >>
+[예시]
+your-project/
+├── .claude/
+│   ├── CLAUDE.md           # 주 프로젝트 지침
+│   └── rules/
+│       ├── code-style.md   # 코드 스타일 가이드라인
+│       ├── testing.md      # 테스트 규칙
+│       └── security.md     # 보안 요구사항
+
+[린트]
+🔍 린트(Lint)란?
+코드의 문법 오류, 스타일 문제, 잠재적 버그를 자동으로 찾아주는 도구입니다.
+
+예시 (voicebot-js 기준)
+bash# ❌ 나쁜 방식 (린트 안 하고 커밋)
+git add .
+git commit -m "오디오 인코딩 추가"
+git push
+
+# ✅ 좋은 방식 (린트 먼저 실행)
+npm run lint    # 또는 your-project의 린트 명령어
+git add .
+git commit -m "오디오 인코딩 추가"
+git push
+
+[경로별 규칙]
+- 규칙은 paths 필드가 있는 YAML frontmatter를 사용하여 특정 파일로 범위를 지정할 수 있습니다. 이러한 조건부 규칙은 Claude가 지정된 패턴과 일치하는 파일로 작업할 때만 적용됩니다.
+- 예시
+---
+paths:
+  - "src/api/**/*.ts"
+---
+
+# API 개발 규칙
+
+- 모든 API 엔드포인트는 입력 검증을 포함해야 합니다
+- 표준 오류 응답 형식을 사용합니다
+- OpenAPI 문서 주석을 포함합니다
+
+[Glob 패턴]
+- paths 필드에서 glob 패턴을 사용하여 확장명, 디렉토리 또는 조합으로 파일을 일치시킵니다:
+- 여러 패턴을 지정하고 중괄호 확장을 사용하여 한 패턴에서 여러 확장명을 일치시킬 수 있습니다:
+패턴	일치
+**/*.ts	                모든 디렉토리의 모든 TypeScript 파일
+src/**/*	              src/ 디렉토리 아래의 모든 파일
+*.md	                  프로젝트 루트의 마크다운 파일
+src/components/*.tsx	  특정 디렉토리의 React 컴포넌트
+-
+
+[서브 디렉토리]
+- 규칙을 서브디렉토리로 구성하여 더 나은 구조를 만들 수 있스비다.
+~/.claude/rules/
+├── frontend
+  ├── react.md
+  └── styles.md
+├── backend
+  ├── api.md
+  └── database.md
+├── general.md
+
+[사용자 수준 규칙]
+~/.claude/rules/의 개인 규칙은 컴퓨터의 모든 프로젝트에 적용됩니다. 프로젝트별이 아닌 선호도에 사용합니다:
+~/.claude/rules/
+├── preferences.md    # 개인 코딩 선호도
+└── workflows.md      # 선호하는 워크플로우
+
+[.claude/rules/ 모범 사례]
+- 규칙을 집중시킵니다: 각 파일은 하나의 주제를 다루어야합니다.(예: testing.md, api-design.md)
+- 설명적인 파일명을 사용합니다: 파일명은 규칙이 다루는 내용을 나타내어야 합니다.
+- 조건부 규칙을 드물게 사용합니다: 규칙이 특정 파일 유형에 정말로 적용될 때만 paths 프론트매터를 추가합니다.
+- 서브 디렉토리로 구성합니다: 관련 규칙을 그룹화합니다(예: frontend/, backend/)
+
+["조건부 규칙을 드물게 사용합니다" 의미]
+- "조건부 규칙을 드물게 사용합니다"는 paths 프론트매터(조건)를 남용하지 말라는 뜻입니다
+📌 무슨 말인가?
+markdown---
+paths:
+  - "src/api/**/*.ts"  ← 이 부분을 "드물게 사용하라"는 뜻
+---
+
+# API 규칙
+
+❌ 나쁜 예 (조건부 규칙을 자주 씀)
+.claude/rules/
+├── api-rules.md (paths: src/api/**)
+├── frontend-rules.md (paths: src/frontend/**)
+├── backend-rules.md (paths: src/backend/**)
+├── test-rules.md (paths: **/__tests/**)
+├── component-rules.md (paths: src/components/**)
+├── hook-rules.md (paths: src/hooks/**)
+└── utility-rules.md (paths: src/utils/**)
+문제점: 거의 모든 파일이 특정 조건부 규칙에 걸림
+
+→ 규칙이 선택적으로만 로드되어 일관성 부족
+
+✅ 좋은 예 (조건부 규칙을 드물게 씀)
+.claude/rules/
+├── general.md  ← 조건 없음 (전체 프로젝트)
+│   - 커밋 메시지 규칙
+│   - 파일명 규칙
+│   - 폴더 구조
+│
+├── testing.md  ← 조건 없음 (전체 프로젝트)
+│   - 테스트 작성 방식
+│   - 테스트 파일명
+│
+└── audio-encoding.md (paths: src/audio/**)  ← 오직 이것만 조건부
+    - G.711 인코딩 규칙 (이 폴더에만 특수)
+    - PCM 변환 기준 (이 폴더에만 필요)
+
+🎯 핵심 원칙
+규칙 타입조건부 여부예시팀 전체가 따를 규칙❌ 조건 없음커밋 메시지, 폴더 구조특정 폴더에만 필요한 규칙✅ paths 사용API 설계, 오디오 처리대부분의 파일이 걸리는 규칙❌ 조건 없음린트, 테스트
+
+📝 voicebot-js 경우
+✅ 좋은 구조
+.claude/rules/
+├── general.md (조건 없음)
+│   - Spring Boot 프로젝트 구조
+│   - 빌드/테스트 커맨드
+│   - Git 커밋 규칙
+│
+├── testing.md (조건 없음)
+│   - 테스트 디렉토리: src/test/java
+│   - 테스트 클래스 네이밍
+│
+└── audio.md (paths: src/audio/**)  ← 오디오 처리에만 적용
+    - G.711 a-law 인코딩 규칙
+    - PCM 청크 3200 바이트
+    - WebSocket 프레임 포맷
+❌ 나쁜 구조
+.claude/rules/
+├── spring-boot-rules.md (paths: src/**)
+├── audio-rules.md (paths: src/audio/**)
+├── websocket-rules.md (paths: src/websocket/**)
+├── stts-rules.md (paths: src/stts/**)
+├── encoder-rules.md (paths: src/audio/encoder/**)
+├── decoder-rules.md (paths: src/audio/decoder/**)
+├── build-rules.md (paths: pom.xml)
+└── test-rules.md (paths: **/__tests/**)
+거의 모든 파일이 조건부 규칙에 걸려서 불필요하게 복잡함!
 ```
 
 ====================================
 ```
+<< CLAUD.md - 2 >>
+- 참조: https://code.claude.com/docs/ko/memory
+
+[비교]
+1) 엔터프라이즈 정책
+  - macOS: /Library/Application Support/ClaudeCode/managed-settings.json
+  - Linux 및 WSL: /etc/claude-code/managed-settings.json
+  - Windows: C:\ProgramData\ClaudeCode\managed-settings.json
+2) 프로젝트 메모리    
+  ./CLAUDE.md 또는 ./.claude/CLAUDE.md
+3) 프로젝트 규칙
+  ./.claude/rules/*.md
+4) 사용자 메모리
+  ~/.claude/CLAUDE.md
+5) 프로젝트 메모리(로컬)
+  ./CLAUDE.local.md
+
+[CLAUDE.md 가이드라인]
+# 코드 스타일
+- [중요]들여쓰기: 스페이스 2칸
+- 세미콜론 사용하지 않음
+- 작은따옴표('') 사용
+
+# Git 규칙
+- 커밋 메시지는 한글ㄹ로 작성
+- 브랜치명: feature/기능명, fix/버그명
+- 커밋은 작은 단위로 나눠서
+
+# 작업 방식
+- 파일 수정 전 변경 계획을 먼저 설명
+- 한 번에 너무 많은 파일을 수정하지 말 것
+
+# 내 개발 환경
+- OS: Windows 11
+
+[CLAUDE.md 팁]
+- 지정해도 항상 따르지는 않는다. 그래서 'IMPORTANT', 'YOU MUST' 지정하면 낫다.
+
+[CLAUDE.md 여러 파일 블러오기]
+- CLAUDE.md 내용은 500줄 이하
+- @path/to/import 구문: 기존에 있는 파일을 지정하는 경우에 사용.
+See @REAMEME for project overview and @package.json for available npm...
+# Additional Instructions
+- git workflows @docs/git-instructoions.md
+
+[메모리 모범 사례]
+- 구체적으로 작성합니다: "2칸 들여쓰기 사용"이 "코드를 적절히 포맷합니다."보다 낫습니다.
+- 구조를 사용하여 구성합니다: 각 개별 메모리를 글머리 기호로 포맷하고 관련 메모리를 설명적인 마크다운 제목 아래에 그룹화합니다.
+- 정기적으로 검토합니다: 프로젝트가 진화함에 따라 메모리를 업데이트하여 Claude 가 항상 최신 전보와 컨텍스트를 사용하도록 합니다.
+
+[/memory 로 메모리 직접 편집]
+블러와진 메모리 목록 확인과 시스템 편집기에서 메모리 파일을 열어 더 광범위한 추가 똔느 구성을 수행.
 ```
 
 ====================================
 ```
+<< CLAUD.md >>
+- 참조: https://code.claude.com/docs/ko/memory
+
+📋 CLAUDE.md란?
+CLAUDE.md는 프로젝트 루트에 추가하는 마크다운 파일로, Claude Code가 매 세션 시작마다 자동으로 읽습니다.
+다음을 설정하는 데 사용합니다:
+
+코딩 표준
+아키텍처 결정사항
+선호 라이브러리
+리뷰 체크리스트 Claude
+
+
+🎯 핵심 특징
+CLAUDE.md는 Claude Code 전체 설정에서 가장 중요한 파일입니다.
+로드 순서:
+
+.claude/settings.local.json (최우선)
+프로젝트 CLAUDE.md ← 여기
+글로벌 ~/.claude/CLAUDE.md (최하위) Substack
+
+
+📁 파일 구조 (전체 모습)
+your-project/
+├── CLAUDE.md ← Claude의 프로젝트 메모리 (가장 중요!)
+└── .claude/
+    ├── settings.json ← 권한, 모델, 훅 설정
+    ├── settings.local.json ← 개인 설정 (gitignored)
+    ├── rules/ ← 경로별 모듈식 지시사항
+    ├── skills/ ← 재사용 가능한 워크플로우 (/skill-name)
+    ├── agents/ ← 전문화된 서브에이전트
+    └── commands/ ← 커스텀 슬래시 커맨드
+ Substack
+
+✍️ CLAUDE.md 작성 원칙
+핵심 원칙: CLAUDE.md는 문서가 아니라 "행동 계약"입니다.
+매 단어가 에이전트의 행동을 바꿔야 합니다. 바꾸지 않는다면 삭제하세요.
+모든 효과적인 파일은 5가지만 다룹니다:
+
+프로젝트 구조 - 핵심 디렉토리와 파일 위치
+코딩 표준 - 언어별 관례 (Snake_case? camelCase?)
+아키텍처 결정 - 선택된 패턴과 이유
+테스트 전략 - 테스트 위치와 작성 방식
+배포 절차 - 빌드, 테스트, 커밋 규칙 Medium
+
+
+💡 작성 스타일
+명령형으로 작성하세요 (제안이 아닌 명령):
+❌ 나쁜 예:
+우리는 일반적으로 인라인 모의를 피하려고 합니다.
+✅ 좋은 예:
+인라인 모의를 절대 사용하지 마세요 — 모든 테스트 데이터는 
+src/test/factories/*를 사용하세요.
+ Medium
+
+📌 실제 예시 (최소 구성)
+markdown# Project Context
+This is a Spring Boot AICC voice bot system handling real-time phone calls.
+
+## Architecture
+- **Orchestrator**: Spring Boot central server handling call flows
+- **STT**: RTZR WebSocket (8kHz, LINEAR16 PCM)
+- **LLM**: Claude API with SSE streaming
+- **TTS**: Google Cloud TTS (WAV → G.711 encoding)
+- **Audio Pipeline**: G.711 a-law ↔ PCM conversion (8kHz→16kHz)
+
+## Code Standards
+- Use Spring Boot best practices for exception handling
+- All WebSocket handlers must validate input encoding
+- Audio chunk size: exactly 3200 bytes (100ms @ 16kHz, 16-bit)
+- Never mix different encoding formats in a single frame
+
+## Testing
+- Unit tests in src/test/java/
+- Integration tests use Docker Compose for dependencies
+- Audio encoding/decoding must be tested with actual G.711 samples
+
+## Git Commit Convention
+Format: [TYPE] Short description
+Types: feat, fix, refactor, docs, test, chore
+Example: [feat] Add G.711 decoding to audio pipeline
+
+## Key Learnings
+- Docker networking: Use service names (mariadb), not localhost
+- JWT: Signing mechanism, not encryption (payload is Base64)
+- STT chunk timing: Buffer 100ms before sending
+
+📌 실제 예시 (최소 구성) - 한글 버전
+markdown# 프로젝트 컨텍스트
+실시간 전화를 처리하는 Spring Boot 기반 AICC 음성봇 시스템입니다.
+
+## 아키텍처
+- **오케스트레이터**: 통화 흐름을 관리하는 Spring Boot 중앙 서버
+- **STT**: RTZR WebSocket (8kHz, LINEAR16 PCM)
+- **LLM**: Claude API SSE 스트리밍
+- **TTS**: Google Cloud TTS (WAV → G.711 인코딩)
+- **오디오 파이프라인**: G.711 a-law ↔ PCM 변환 (8kHz→16kHz)
+
+## 코딩 표준
+- Spring Boot 예외 처리 모범 사례 사용
+- 모든 WebSocket 핸들러는 입력 인코딩 검증 필수
+- 오디오 청크 크기: 정확히 3200 바이트 (100ms @ 16kHz, 16-bit)
+- 단일 프레임에서 서로 다른 인코딩 형식을 절대 혼합하지 마세요
+
+## 테스팅
+- 단위 테스트: src/test/java/
+- 통합 테스트: Docker Compose로 종속성 관리
+- 오디오 인코딩/디코딩은 실제 G.711 샘플로 테스트 필수
+
+## Git 커밋 규칙
+형식: [타입] 짧은 설명
+타입: feat, fix, refactor, docs, test, chore
+예시: [feat] G.711 디코딩을 오디오 파이프라인에 추가
+
+## 핵심 학습사항
+- Docker 네트워킹: localhost가 아닌 서비스명(mariadb) 사용
+- JWT: 암호화가 아닌 서명 메커니즘 (페이로드는 Base64)
+- STT 청크 타이밍: 전송 전 100ms 버퍼링
+
+#
 ```
 
 ====================================
