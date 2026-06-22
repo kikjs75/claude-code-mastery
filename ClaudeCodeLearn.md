@@ -8,7 +8,136 @@
 
 ====================================
 ```
+<< MCP >>
+- 참조: https://code.claude.com/docs/en/mcp
+- Context7(https://context7.com/): AI 코드 에디터를 위한 최신 문서 및 코드 예제 제공 플랫폼입니다. Upstash가 만들었습니다.
+
+[사용법]
+- /mcp: 설치된 MCP 목록 확인
+- 프롬프트에서 명시적 호출이 낫음.
+Next.js 로 개발을 진행할거야! 최신 웹 개발 기술스택을 추천해줘.
+use context7
+
+❯ context7 MCP 설치가 되었는데 .mcp.json 안만들어지나?                                                                                        
+
+⏺ 현재 디렉토리의 MCP 설정 파일들을 확인해 보겠습니다.
+
+  Read 2 files, listed 3 directories (ctrl+o to expand)
+
+⏺ 원인을 파악했습니다!
+
+  .mcp.json이 프로젝트에 생성되지 않는 이유
+
+  Context7은 플러그인(Plugin) 방식으로 설치되어 있어서 프로젝트 루트에 .mcp.json이 생성되지 않습니다.
+
+  설치 방식별 차이
+
+  ┌──────────────────┬───────────────────────────────────────────────────────────────────────┐
+  │    설치 방식     │                            .mcp.json 위치                             │
+  ├──────────────────┼───────────────────────────────────────────────────────────────────────┤
+  │ 플러그인(Plugin) │ ~/.claude/plugins/.../external_plugins/context7/.mcp.json ← 현재 상태 │
+  ├──────────────────┼───────────────────────────────────────────────────────────────────────┤
+  │ 프로젝트 레벨    │ 프로젝트 루트 .mcp.json                                               │
+  ├──────────────────┼───────────────────────────────────────────────────────────────────────┤
+  │ 글로벌 레벨      │ ~/.claude/settings.json 내 mcpServers 키                              │
+  └──────────────────┴───────────────────────────────────────────────────────────────────────┘
+
+  현재 context7은 여기에 있습니다:
+  ~/.claude/plugins/marketplaces/claude-plugins-official/
+    └── external_plugins/context7/.mcp.json
+
+  프로젝트 루트에 .mcp.json 만들고 싶다면
+
+  # 방법 1: 직접 파일 생성
+
+  프로젝트 루트에 .mcp.json 파일을 수동으로 만들면 됩니다:
+
+  {
+    "mcpServers": {
+      "context7": {
+        "command": "npx",
+        "args": ["-y", "@upstash/context7-mcp"]
+      }
+    }
+  }
+
+  또는 Claude Code CLI로 추가:
+  claude mcp add context7 -- npx -y @upstash/context7-mcp
+
+  결론
+
+  플러그인으로 설치하면 전역(Global) 으로 모든 프로젝트에서 사용 가능하고, .mcp.json은 특정 프로젝트에만 MCP를 적용하고 싶을 때 사용합니다.
+  현재 상태로도 정상 동작하기 때문에 .mcp.json이 따로 생성되지 않은 것입니다!
+
+✻ Baked for 35s
+
+❯ .mcp.json 정확한 위치를 알려줘.                                                                                                             
+
+⏺ Claude Code에서 .mcp.json 파일의 위치는 범위(Scope) 에 따라 3가지입니다.
+
+  ---
+  .mcp.json 정확한 위치
+
+  1. 프로젝트 레벨 (팀 공유용)
+
+  /Users/jinsu.kim/job/study/claude/claude-code-mastery/.mcp.json
+  → 프로젝트 루트에 위치, git에 커밋해서 팀원과 공유 가능
+
+  2. 글로벌 레벨 (개인 전체 적용)
+
+  ~/.claude/settings.json
+  → .mcp.json 파일이 아닌 settings.json 안의 mcpServers 키로 관리
+
+  3. 로컬 레벨 (개인 전용 + git 제외)
+
+  /Users/jinsu.kim/job/study/claude/claude-code-mastery/.claude/settings.local.json
+  → .gitignore에 추가해서 개인만 사용
+
+  ---
+  현재 상태 요약
+
+  현재 프로젝트 루트/
+  ├── .mcp.json          ← 없음 (플러그인으로 설치했기 때문)
+  └── .claude/
+      └── settings.local.json  ← 없음
+
+  ~/.claude/
+  ├── settings.json           ← 글로벌 설정 있음
+  └── plugins/.../context7/
+      └── .mcp.json           ← 플러그인으로 설치된 context7
+
+  ---
+  권장 사용법
+
+  # 프로젝트 전용으로 추가 (프로젝트 루트에 .mcp.json 생성)
+  claude mcp add --scope project context7 -- npx -y @upstash/context7-mcp
+
+  # 글로벌로 추가 (~/.claude/settings.json에 추가)
+  claude mcp add --scope user context7 -- npx -y @upstash/context7-mcp
+
+  가장 많이 쓰는 건 프로젝트 루트의 .mcp.json 입니다!
+
+✻ Cogitated for 10s
+
+❯ 현재 플러그인(Plugin) 방식으로 설치되어서 다른 위치라며 그 위치를 알려줘.                                                                   
+
+⏺ 이미 확인한 위치입니다!
+
+  /Users/jinsu.kim/.claude/plugins/marketplaces/claude-plugins-official/external_plugins/context7/.mcp.json
+
+  내용은 이렇게 되어 있습니다:
+
+  {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    }
+  }
+
+[mcp 권한 도구 승인]
+mcp__{mcp name} => mcp__context7 : context7 의 모든 도구 권한 승인.
 ```
+
 
 ====================================
 ```
