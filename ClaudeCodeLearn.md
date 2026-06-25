@@ -472,6 +472,10 @@ d6d2bca ClaudeCodeLearn.md에 훅·서브에이전트·슬래시명령어·MCP·
 ====================================
 ```
 << Claude Code 훅 활용 - 슬랙 알림 추가하기 >>
+
+[참조]
+https://code.claude.com/docs/ko/hooks
+
 [구조]
 
 Hooks         --> Slack Webhook --> 슬랙App
