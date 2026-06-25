@@ -28,6 +28,445 @@
 
 ====================================
 ```
+<< Slack Webhook URL 포함되어 git push 막힘 해결 >>
+  - 🔒️ security: ClaudeCodeLearn.md에서 노출된 Slack Webhook URL 제거
+
+  다만 이 커밋만으로는 히스토리에 남아있는 이전 커밋(d6d2bca)의 URL이 사라지지 않습니다. 푸시하려면 여전히 GitHub에서 허용하거나, 히스토리를
+  rewrite해야 합니다.
+
+  다음 단계 선택:
+  1. GitHub에서 허용 → 제공된 링크에서 unblock 후 git push
+  2. 히스토리 rewrite → git rebase로 해당 커밋을 수정 후 force push (제가 도와드릴수 있습니다)
+
+  어떻게 진행하시겠습니까?
+
+✻ Crunched for 16s
+
+❯ 히스토리 rewrite 해줘 => 어떤 의미야?                                                                                                      
+
+⏺ Git 히스토리 Rewrite란?
+  
+  Git은 모든 커밋을 체인 형태로 영구 저장합니다. 파일을 수정해서 새 커밋을 만들어도, 과거 커밋은 그대로 남아있습니다.
+
+  - 🔒️ security: ClaudeCodeLearn.md에서 노출된 Slack Webhook URL 제거
+
+  다만 이 커밋만으로는 히스토리에 남아있는 이전커밋(d6d2bca)의 URL이 사라지지 않습니다. 푸시하려면 여전히 GitHub에서 허용하거나, 히스토리를
+  rewrite해야 합니다.
+
+  다음 단계 선택:
+  1. GitHub에서 허용 → 제공된 링크에서 unblock 후 git push
+  2. 히스토리 rewrite → git rebase로 해당 커밋을 수정 후 force push (제가 도와드릴수 있습니다)
+
+  어떻게 진행하시겠습니까?
+
+✻ Crunched for 16s
+
+❯ 히스토리 rewrite 해줘 => 어떤 의미야?                                                                                                      
+
+⏺ Git 히스토리 Rewrite란?
+
+  Git은 모든 커밋을 체인 형태로 영구 저장합니다. 파일을 수정해서 새 커밋을 만들어도, 과거 커밋은 그대로 남아있습니다.
+
+  [d6d2bca] → [09bf2ce] → [cc260f0] → ... → [ff2b64e] ← 현재
+       ↑
+    여기에 아직 Webhook URL이 남아있음
+    (최신 커밋에서 지워도 과거엔 존재)
+
+  ---
+  히스토리 Rewrite = 과거 커밋 자체를 수술
+
+  문제 커밋(d6d2bca)으로 돌아가서 커밋 내용 자체를 변경하고, 그 이후 커밋들을 전부새로 만드는 작업입니다.
+
+  [d6d2bca✂️ ] → [09bf2ce'] → [cc260f0'] → ... → [ff2b64e'] ← 새 히스토리
+       ↑
+    URL을 여기서 직접 제거
+
+  이렇게 하면 어느 커밋을 체크아웃해도 URL이 보이지 않습니다.
+
+  ---
+  주의점
+
+  - 히스토리가 바뀌므로 git push --force가 필요합니다
+  - 다른 사람이 이 브랜치를 사용 중이라면 충돌 위험이 있습니다 (혼자 쓰는 브랜치라면 안전)
+
+  ---
+  진행할까요? (현재 main 브랜치를 혼자 사용 중이시면 안전합니다)
+
+✻ Cogitated for 10s
+
+❯ 나에게 방법을 알려줘.                                                                                                                      
+
+⏺ Bash(git log --oneline)
+  ⎿  ff2b64e 🔒️ security: ClaudeCodeLearn.md에서 노출된 Slack Webhook URL 제거
+     02cc798 📝 docs: /commit 슬래시 명령어 문서 개선 및 프론트매터 추가
+     d6d2bca ClaudeCodeLearn.md에 훅·서브에이전트·슬래시명령어·MCP·Auto Memory 학습 내용 추가 및 커스텀 commit 명령어 파일 생성
+     … +21 lines (ctrl+o to expand)
+
+⏺ 현재 히스토리를 보면 문제 커밋은 d6d2bca입니다. 아래 단계를 따라하세요.
+
+  ---
+  히스토리 Rewrite 방법
+
+  Step 1 — Interactive Rebase 시작
+
+  터미널에서 아래 명령어를 실행하세요.
+  d6d2bca 바로 이전 커밋인 09bf2ce^을 기준으로 합니다:
+
+  git rebase -i 09bf2ce
+
+  Step 2 — 에디터에서 edit 선택
+
+  에디터가 열리면 이런 화면이 나옵니다:
+
+  pick d6d2bca ClaudeCodeLearn.md에 훅·서브에이전트...
+  pick 02cc798 📝 docs: /commit 슬래시 명령어...
+  pick ff2b64e 🔒️ security: ClaudeCodeLearn.md에서...
+
+  d6d2bca 앞의 pick을 edit으로 변경하세요:
+
+  edit d6d2bca ClaudeCodeLearn.md에 훅·서브에이전트...   ← 이것만 변경
+  pick 02cc798 ...
+  pick ff2b64e ...
+
+  저장 후 에디터를 닫으면 d6d2bca 시점으로 이동합니다.
+
+  Step 3 — 파일에서 URL 제거
+
+  ClaudeCodeLearn.md 101번째 줄을 열어 Webhook URL을 직접 삭제하거나 플레이스홀더로 교체합니다.
+
+  Step 4 — 수정사항 반영
+
+  git add ClaudeCodeLearn.md
+  git commit --amend --no-edit   # 커밋 메시지는 그대로 유지
+
+  Step 5 — Rebase 계속 진행
+
+  git rebase --continue   # 나머지 커밋들을 이어서 재생성
+
+  Step 6 — Force Push
+
+  git push --force
+
+  ---
+
+  ▎ 핵심 흐름 요약
+  ▎ git rebase -i 09bf2ce
+  ▎   → pick을 edit으로 변경
+  ▎   → 파일 수정
+  ▎   → git add + git commit --amend
+  ▎   → git rebase --continue
+  ▎   → git push --force
+
+  막히는 단계가 있으면 알려주세요!
+
+✻ Baked for 17s
+
+❯ 좀 더 쉽게 설명.                                                                                                                           
+
+⏺ 핵심 개념부터
+
+  Git 커밋은 영수증 묶음이라고 생각하세요.
+
+  영수증1 → 영수증2(문제!) → 영수증3 → 영수증4 → 현재
+
+  우리가 할 일: 영수증2로 돌아가서 내용 수정 → 다시 도장 찍기
+
+  ---
+  딱 6단계
+
+  ① 과거로 이동 준비
+  git rebase -i 09bf2ce
+  → 에디터(vim 또는 nano)가 열림
+
+  ② 에디터에서 pick → edit 으로 변경
+
+  열린 화면에서 첫 번째 줄:
+  pick d6d2bca ClaudeCodeLearn.md에 훅...
+  pick 을 edit 으로 바꾸고 저장/종료
+
+  ▎ vim이면 i 눌러서 수정 → Esc → :wq 로 저장
+
+  ③ 파일 수정
+
+  ClaudeCodeLearn.md 열어서 101번째 줄의 Webhook URL 삭제
+
+  ④ 수정 저장
+  git add ClaudeCodeLearn.md
+  git commit --amend --no-edit
+
+  ⑤ 현재로 복귀
+  git rebase --continue
+
+  ③ 파일 수정
+
+
+  ClaudeCodeLearn.md 열어서 101번째 줄의 Webhook URL 삭제
+
+  ④ 수정 저장
+  git add ClaudeCodeLearn.md
+  git commit --amend --no-edit
+  git commit --amend --no-edit
+
+  ⑤ 현재로 복귀
+  git rebase --continue
+  git rebase --continue
+
+  ⑥ 강제 푸시
+  git push --force
+
+✻ Churned for 9s
+
+❯ pick 을 edit 으로 바꾸는 이유가 뭐야?                                                                                                      
+  ---
+
+  ▎ vim이 익숙하지 않으시면 어떤 에디터가 열리는지 알려주시면 도와드릴게요!
+  ---
+
+  ▎ vim이 익숙하지 않으시면 어떤 에디터가 열리는지 알려주시면 도와드릴게요!
+
+✻ Churned for 9s
+
+❯ pick 을 edit 으로 바꾸는 이유가 뭐야?                                                                                                                              
+
+⏺ pick vs edit 차이
+
+  Git rebase는 기본적으로 커밋들을 자동으로 그냥 통과시킵니다.
+
+  ┌──────┬────────────────────────────────────────┐
+
+  git add ClaudeCodeLearn.md
+  git commit --amend --no-edit   # 커밋 메시지는
+  그대로 유지
+
+  Step 5 — Rebase 계속 진행
+
+  git rebase --continue   # 나머지 커밋들을
+  이어서 재생성
+
+  Step 6 — Force Push
+
+  git push --force
+
+  ---
+
+  ▎ 핵심 흐름 요약
+  ▎ git rebase -i 09bf2ce
+  ▎   → pick을 edit으로 변경
+  ▎   → 파일 수정
+  ▎   → git add + git commit --amend
+  ▎   → git rebase --continue
+  ▎   → git push --force
+
+  막히는 단계가 있으면 알려주세요!
+
+✻ Baked for 17s
+
+❯ 좀 더 쉽게 설명.                              
+
+⏺ 핵심 개념부터
+
+  Git 커밋은 영수증 묶음이라고 생각하세요.
+
+  영수증1 → 영수증2(문제!) → 영수증3 → 영수증4 →
+  현재
+
+  우리가 할 일: 영수증2로 돌아가서 내용 수정 →
+  다시 도장 찍기
+
+  ---
+  딱 6단계
+
+  ① 과거로 이동 준비
+  git rebase -i 09bf2ce
+  → 에디터(vim 또는 nano)가 열림
+
+  ② 에디터에서 pick → edit 으로 변경
+
+  열린 화면에서 첫 번째 줄:
+  pick d6d2bca ClaudeCodeLearn.md에 훅...
+  pick 을 edit 으로 바꾸고 저장/종료
+
+  ▎ vim이면 i 눌러서 수정 → Esc → :wq 로 저장
+
+  ③ 파일 수정
+
+  ClaudeCodeLearn.md 열어서 101번째 줄의 Webhook
+  URL 삭제
+
+  ④ 수정 저장
+  git add ClaudeCodeLearn.md
+  git commit --amend --no-edit
+
+  ⑤ 현재로 복귀
+  git rebase --continue
+
+  ⑥ 강제 푸시
+  git push --force
+
+  ---
+
+  ▎ vim이 익숙하지 않으시면 어떤 에디터가
+  ▎ 열리는지 알려주시면 도와드릴게요!
+
+✻ Churned for 9s
+  ---
+
+  ▎ vim이 익숙하지 않으시면 어떤 에디터가 열리는지 알려주시면 도와드릴게요!
+
+✻ Churned for 9s
+
+❯ pick 을 edit 으로 바꾸는 이유가 뭐야?                                                     
+
+⏺ pick vs edit 차이
+
+  Git rebase는 기본적으로 커밋들을 자동으로 그냥 통과시킵니다.
+
+  ┌──────┬────────────────────────────────────────┐
+  │ 옵션 │                  의미                  │
+  ├──────┼────────────────────────────────────────┤
+  │ pick │ "이 커밋 그냥 써" → 자동 통과          │
+  ├──────┼────────────────────────────────────────┤
+  │ edit │ "이 커밋에서 잠깐 멈춰" → 수정 기회 줌 │
+  └──────┴────────────────────────────────────────┘
+
+  ---
+  비유로 설명
+
+  영상 편집할 때 타임라인을 재생하는 상황:
+
+  pick  = ▶️  자동 재생 (그냥 지나침)
+  edit  = ⏸️  일시정지 (여기서 편집 가능)
+
+  d6d2bca 커밋에 edit을 걸면:
+
+  재생 중... → d6d2bca 도착 → ⏸️  일시정지!
+                                 ↓
+                            "파일 수정하세요"
+                                 ↓
+                            git commit --amend  (다시 도장)
+                                 ↓
+                            git rebase --continue  (▶️  재개)
+
+  ---
+  한 마디로: edit = "이 커밋 지나치기 전에 나 좀 건드릴게" 라는 신호입니다.
+
+❯ 왜 에러?                                                                                  
+  jinsu.kim@jinsukimui-MacBookPro claude-code-mastery % git rebase --continue               
+  Auto-merging ClaudeCodeLearn.md                                                           
+  CONFLICT (content): Merge conflict in ClaudeCodeLearn.md                                  
+  error: could not apply ff2b64e... 🔒️ security: ClaudeCodeLearn.md에서 노출된 Slack        
+  Webhook URL 제거                                                                          
+  hint: Resolve all conflicts manually, mark them as resolved with                          
+  hint: "git add/rm <conflicted_files>", then run "git rebase --continue".                  
+  hint: You can instead skip this commit: run "git rebase --skip".                          
+  hint: To abort and get back to the state before "git rebase", run "git rebase --abort".   
+  hint: Disable this message with "git config set advice.mergeConflict false"               
+  Could not apply ff2b64e... # 🔒️ security: ClaudeCodeLearn.md에서 노출된 Slack Webhook URL 
+  제거                                                                                      
+  jinsu.kim@jinsukimui-MacBookPro claude-code-mastery %                                     
+  ⎿  1 skill available
+
+⏺ 왜 이런 에러가 났냐면
+
+  충돌 원인을 보면:
+
+  d6d2bca (수정됨) : URL 제거 ✅
+      ↓
+  02cc798           : 통과
+      ↓
+  ff2b64e           : "URL 제거" 커밋 ← 이미 위에서 제거했는데 또 제거하려다 충돌!
+
+  ff2b64e는 우리가 아까 만든 보안 수정 커밋인데, 이미 d6d2bca에서 URL을 제거했기 때문에 같은
+  줄을 또 건드리려다 충돌이 난 겁니다.
+
+  ---
+  해결법 — 이 커밋은 건너뛰기
+
+  ff2b64e는 이제 불필요한 커밋이므로 그냥 스킵하면 됩니다:
+
+  git rebase --skip
+
+  이렇게 하면 ff2b64e 커밋 자체가 삭제되고, 깔끔하게 완료됩니다.
+
+  그 다음 푸시:
+  git push --force
+
+✻ Brewed for 20s
+
+❯ rebase 이전/이후 log 내용. 수정 기준인 09bf2ce 이후에 git id 값이 바뀌는거네? 그리고      
+  충돌난 마지막 ff2b64e 없어진것이고?                                                       
+  1) 이후                                                                                   
+  jinsu.kim@jinsukimui-MacBookPro claude-code-mastery % git log --oneline                   
+  272dec5 (HEAD -> main) 📝 docs: /commit 슬래시 명령어 문서 개선 및 프론트매터 추가        
+  f9362d3 ClaudeCodeLearn.md에 훅·서브에이전트·슬래시명령어·MCP·Auto Memory 학습 내용 추가  
+  및 커스텀 commit 명령어 파일 생성                                                         
+  09bf2ce (origin/main, origin/HEAD) Add AI workflow section to ClaudeCodeLearn.md,         
+  outlining the steps: Explore, Plan, Code, Commit.                                         
+                                                                                            
+  2) 이전                                                                                   
+  jinsu.kim@jinsukimui-MacBookPro claude-code-mastery % git log --oneline                   
+  ff2b64e (HEAD -> main) 🔒️ security: ClaudeCodeLearn.md에서 노출된 Slack Webhook URL 제거  
+  02cc798 📝 docs: /commit 슬래시 명령어 문서 개선 및 프론트매터 추가                       
+  d6d2bca ClaudeCodeLearn.md에 훅·서브에이전트·슬래시명령어·MCP·Auto Memory 학습 내용 추가  
+  및 커스텀 commit 명령어 파일 생성                                                         
+  09bf2ce (origin/main, origin/HEAD) Add AI workflow section to ClaudeCodeLearn.md,         
+  outlining the steps: Explore, Plan, Code, Commit.                                         
+                                                                                            
+
+⏺ 정확히 이해하셨습니다!
+
+  ---
+  ID가 바뀐 이유
+
+  커밋 ID(해시)는 커밋 내용 + 부모 커밋 ID로 계산됩니다.
+
+  d6d2bca의 내용을 수정했더니 → 새 ID f9362d3이 됐고
+  그 부모가 바뀌었으니 → 자식인 02cc798도 새 ID 272dec5가 됐습니다.
+
+  이전: 09bf2ce → d6d2bca → 02cc798 → ff2b64e
+                     ↓ (내용 수정)
+  이후: 09bf2ce → f9362d3 → 272dec5
+
+  09bf2ce 아래는 건드리지 않았으니 ID 그대로입니다.
+
+  ---
+  ff2b64e가 없어진 이유
+
+  맞습니다. git rebase --skip으로 건너뛰었기 때문에 히스토리에서 완전히 사라졌습니다.
+
+  원래 ff2b64e는 "URL 제거" 커밋이었는데, 이미 f9362d3(수정된 d6d2bca)에서 URL이
+  제거됐으므로 역할이 없어져서 지워도 문제없는 상태였습니다.
+
+  ---
+  결론
+
+  ┌───────────────┬─────────────────────┬──────────────────────────────┐
+  │               │        이전         │             이후             │
+  ├───────────────┼─────────────────────┼──────────────────────────────┤
+  │ 커밋 수       │ 4개                 │ 2개                          │
+  ├───────────────┼─────────────────────┼──────────────────────────────┤
+  │ URL 제거 위치 │ ff2b64e (별도 커밋) │ f9362d3 (원본에서 바로 제거) │
+  ├───────────────┼─────────────────────┼──────────────────────────────┤
+  │ 히스토리      │ URL이 과거에 존재   │ URL이 처음부터 없음          │
+  └───────────────┴─────────────────────┴──────────────────────────────┘
+
+  이제 git push --force 하시면 됩니다!
+
+> rebase 이전/이후 log 내용. 수정 기준인 09bf2ce 이후에 git id 값이 바뀌는거네? 그리고 충돌난 마지막 ff2b64e 없어진것이고?
+
+1) 이후
+jinsu.kim@jinsukimui-MacBookPro claude-code-mastery % git log --oneline
+272dec5 (HEAD -> main) 📝 docs: /commit 슬래시 명령어 문서 개선 및 프론트매터 추가
+f9362d3 ClaudeCodeLearn.md에 훅·서브에이전트·슬래시명령어·MCP·Auto Memory 학습 내용 추가 및 커스텀 commit 명령어 파일 생성
+09bf2ce (origin/main, origin/HEAD) Add AI workflow section to ClaudeCodeLearn.md, outlining the steps: Explore, Plan, Code, Commit.
+
+2) 이전
+jinsu.kim@jinsukimui-MacBookPro claude-code-mastery % git log --oneline
+ff2b64e (HEAD -> main) 🔒️ security: ClaudeCodeLearn.md에서 노출된 Slack Webhook URL 제거
+02cc798 📝 docs: /commit 슬래시 명령어 문서 개선 및 프론트매터 추가
+d6d2bca ClaudeCodeLearn.md에 훅·서브에이전트·슬래시명령어·MCP·Auto Memory 학습 내용 추가 및 커스텀 commit 명령어 파일 생성
+09bf2ce (origin/main, origin/HEAD) Add AI workflow section to ClaudeCodeLearn.md, outlining the steps: Explore, Plan, Code, Commit.
+
 ```
 
 ====================================
