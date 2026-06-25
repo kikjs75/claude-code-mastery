@@ -20,10 +20,535 @@
 
 ====================================
 ```
+<< MCP 사용시 주의사항 >>
+[context 에서의 MCP tools]
+- 프로젝트에 따라 MCP tools 비중이 다르다. 시작도 전에 벌써 20.9% 차지하거나 0.6%만 차지하는 경우도 있다.
+- 그래서 꼭 필요한 MCP 만 활성화한다.
+
+
+❯ /clear                                                                                                                                                                                  
+
+❯ /context 
+  ⎿  Context Usage
+     ⛁ ⛁ ⛁ ⛀ ⛁ ⛁ ⛁ ⛁ ⛀ ⛁   Sonnet 4.6
+     ⛀ ⛀ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   claude-sonnet-4-6
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   20.1k/200k tokens (10%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ 
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   Estimated usage by category
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ System prompt: 7.2k tokens (3.6%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ System tools: 8.6k tokens (4.3%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ Custom agents: 753 tokens (0.4%)
+     ⛶ ⛶ ⛶ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝   ⛁ Memory files: 2.3k tokens (1.2%)
+     ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝   ⛁ Skills: 1.1k tokens (0.6%)
+                           ⛁ Messages: 110 tokens (0.1%)
+                           ⛶ Free space: 146.9k (73.4%)
+                           ⛝ Autocompact buffer: 33k tokens (16.5%)
+
+     Auto-compact window: 200k tokens
+
+     MCP tools · /mcp (loaded on-demand)
+
+     Available
+     ├ mcp__claude_ai_Gmail__create_draft
+     ├ mcp__claude_ai_Gmail__create_label
+     ├ mcp__claude_ai_Gmail__delete_label
+     ├ mcp__claude_ai_Gmail__get_thread
+     ├ mcp__claude_ai_Gmail__label_message
+     ├ mcp__claude_ai_Gmail__label_thread
+     ├ mcp__claude_ai_Gmail__list_drafts
+     ├ mcp__claude_ai_Gmail__list_labels
+     ├ mcp__claude_ai_Gmail__search_threads
+     ├ mcp__claude_ai_Gmail__unlabel_message
+     ├ mcp__claude_ai_Gmail__unlabel_thread
+     ├ mcp__claude_ai_Gmail__update_label
+     ├ mcp__claude_ai_Google_Calendar__create_event
+     ├ mcp__claude_ai_Google_Calendar__delete_event
+     ├ mcp__claude_ai_Google_Calendar__get_event
+     ├ mcp__claude_ai_Google_Calendar__list_calendars
+     ├ mcp__claude_ai_Google_Calendar__list_events
+     ├ mcp__claude_ai_Google_Calendar__respond_to_event
+     ├ mcp__claude_ai_Google_Calendar__suggest_time
+     ├ mcp__claude_ai_Google_Calendar__update_event
+     ├ mcp__claude_ai_Google_Drive__authenticate
+     ├ mcp__claude_ai_Google_Drive__complete_authentication
+     ├ mcp__claude_ai_Notion__notion-create-comment
+     ├ mcp__claude_ai_Notion__notion-create-database
+     ├ mcp__claude_ai_Notion__notion-create-pages
+     ├ mcp__claude_ai_Notion__notion-create-view
+     ├ mcp__claude_ai_Notion__notion-duplicate-page
+     ├ mcp__claude_ai_Notion__notion-fetch
+     ├ mcp__claude_ai_Notion__notion-get-async-task
+     ├ mcp__claude_ai_Notion__notion-get-comments
+     ├ mcp__claude_ai_Notion__notion-get-teams
+     ├ mcp__claude_ai_Notion__notion-get-users
+     ├ mcp__claude_ai_Notion__notion-move-pages
+     ├ mcp__claude_ai_Notion__notion-query-data-sources
+     ├ mcp__claude_ai_Notion__notion-query-database-view
+     ├ mcp__claude_ai_Notion__notion-query-meeting-notes
+     ├ mcp__claude_ai_Notion__notion-search
+     ├ mcp__claude_ai_Notion__notion-update-data-source
+     ├ mcp__claude_ai_Notion__notion-update-page
+     ├ mcp__claude_ai_Notion__notion-update-view
+     ├ mcp__context7__query-docs
+     ├ mcp__context7__resolve-library-id
+     ├ mcp__ide__executeCode
+     ├ mcp__ide__getDiagnostics
+     ├ mcp__playwright__browser_click
+     ├ mcp__playwright__browser_close
+     ├ mcp__playwright__browser_console_messages
+     ├ mcp__playwright__browser_drag
+     ├ mcp__playwright__browser_drop
+     ├ mcp__playwright__browser_evaluate
+     ├ mcp__playwright__browser_file_upload
+     ├ mcp__playwright__browser_fill_form
+     ├ mcp__playwright__browser_handle_dialog
+     ├ mcp__playwright__browser_hover
+     ├ mcp__playwright__browser_navigate
+     ├ mcp__playwright__browser_navigate_back
+     ├ mcp__playwright__browser_network_request
+     ├ mcp__playwright__browser_network_requests
+     ├ mcp__playwright__browser_press_key
+     ├ mcp__playwright__browser_resize
+     ├ mcp__playwright__browser_run_code_unsafe
+     ├ mcp__playwright__browser_select_option
+     ├ mcp__playwright__browser_snapshot
+     ├ mcp__playwright__browser_tabs
+     ├ mcp__playwright__browser_take_screenshot
+     ├ mcp__playwright__browser_type
+     ├ mcp__playwright__browser_wait_for
+     ├ mcp__sequential-thinking__sequentialthinking
+     ├ mcp__shadcn__get_add_command_for_items
+     ├ mcp__shadcn__get_audit_checklist
+     ├ mcp__shadcn__get_item_examples_from_registries
+     ├ mcp__shadcn__get_project_registries
+     ├ mcp__shadcn__list_items_in_registries
+     ├ mcp__shadcn__search_items_in_registries
+     └ mcp__shadcn__view_items_in_registries
+
+     Custom agents · /agents
+
+     Project
+     └ code-reviewer: 753 tokens
+
+     Memory files · /memory
+     ├ ~/.claude/CLAUDE.md: 119 tokens
+     ├ CLAUDE.md: 2.1k tokens
+     ├ AGENTS.md: 68 tokens
+     └ ~/.claude/projects/-Users-jinsu-kim-job-study-claude-claude-nextjs-starters/memory/MEMORY.md: 72 tokens
+
+     Skills · /skills
+
+     Project
+     └ git:commit: < 20 tokens
+
+     Built-in
+     ├ claude-api: ~270 tokens
+     ├ update-config: ~180 tokens
+     ├ code-review: ~100 tokens
+     ├ schedule: ~90 tokens
+     ├ run: ~90 tokens
+     ├ loop: ~90 tokens
+     ├ verify: ~60 tokens
+     ├ keybindings-help: ~60 tokens
+     ├ fewer-permission-prompts: ~50 tokens
+     ├ simplify: ~50 tokens
+     ├ security-review: ~20 tokens
+     ├ review: < 20 tokens
+     └ init: < 20 tokens
+
+❯ ❯ - 프로젝트에 따라 MCP tools 비중이 다르다. 시작도 전에 벌써 20.9% 차지하거나 0.6%만 차지하는 경우도 있다.                                                                             
+    - 그래서 꼭 필요한 MCP 만 활성화한다.                                                                                                                                                 
+                                                                                                                                                                                          
+    위와 같은 지침이 있어. 그러면 MCP 활성화/비활성화 방법은 어떻게 돼?                                                                                                                   
+
+⏺ 현재 프로젝트의 .mcp.json을 먼저 확인하겠습니다.
+
+  프로젝트의 .mcp.json을 읽어보겠습니다.
+
+  Read 1 file (ctrl+o to expand)
+
+⏺ MCP 활성화/비활성화 방법은 크게 설정 파일 위치와 비활성화 방식 두 가지로 나뉩니다.
+
+  ---
+  MCP 설정 파일 위치 (스코프 우선순위)
+
+  ┌──────────┬───────────────────────────┬─────────────────┐
+  │  스코프  │         파일 경로         │    적용 범위    │
+  ├──────────┼───────────────────────────┼─────────────────┤
+  │ 프로젝트 │ .mcp.json (프로젝트 루트) │ 해당 프로젝트만 │
+  ├──────────┼───────────────────────────┼─────────────────┤
+  │ 글로벌   │ ~/.claude/mcp.json        │ 모든 프로젝트   │
+  └──────────┴───────────────────────────┴─────────────────┘
+
+  Gmail, Google Calendar, Notion, ide 등은 ~/.claude/mcp.json에 글로벌로 등록되어 있어서 모든 프로젝트에서 로드됩니다 (컨텍스트의 21.8%를 차지하는 주범).
+
+  ---
+  비활성화 방법
+
+  방법 1 — 파일에서 항목 제거 (완전 비활성화)
+  .mcp.json에서 해당 서버 블록을 삭제합니다.
+
+  방법 2 — disabled 필드 사용 (임시 비활성화)
+  {
+    "mcpServers": {
+      "playwright": {
+        "disabled": true,
+        "type": "stdio",
+        "command": "npx",
+        "args": ["@playwright/mcp@latest"]
+      }
+    }
+  }
+
+  방법 3 — /mcp 명령어로 토글 (세션 내 임시)
+  Claude Code에서 /mcp 입력 → 서버 목록에서 토글 가능. 단, 세션이 끝나면 초기화됩니다.
+
+  ---
+  현재 상황 개선 제안
+
+  Gmail/Calendar/Notion/Google Drive가 컨텍스트의 ~17%를 차지합니다. 이것들은 ~/.claude/mcp.json에 있을 가능성이 높습니다. 이 프로젝트(Next.js 개발)에서는 사용하지 않으므로:
+
+  - 글로벌에서 제거하거나
+  - 프로젝트별로 비활성화 override — .mcp.json에서 "disabled": true로 오버라이드
+
+  글로벌 MCP 파일도 확인할까요?
+
+✻ Brewed for 22s
+
+❯ /mcp 
+  ⎿  MCP dialog dismissed
+
+❯ '/mcp' 내용을 보면 claude.ai 에서 온 것 같아. 이건 글로벌과 다른 것 같아.                                                                                                               
+
+⏺ 맞습니다. 좋은 관찰입니다.
+  
+  mcp__claude_ai_Gmail__*, mcp__claude_ai_Google_Calendar__*, mcp__claude_ai_Notion__* 등은 로컬 .mcp.json이나 ~/.claude/mcp.json에서 오는 게 아닙니다.
+  
+  출처: claude.ai 웹 앱의 통합(Integrations) 기능
+
+  claude.ai 웹에서 Gmail, Google Calendar, Notion 등을 연결하면, Claude Code CLI 세션에도 그 툴들이 자동으로 주입됩니다. 이게 mcp__claude_ai_* 네이밍 패턴으로 나타나는 것입니다.
+
+  ---
+  비활성화 방법
+
+  로컬 파일로는 제어 불가능하고, claude.ai 웹에서 관리해야 합니다.
+
+  claude.ai → 설정(Settings) → Integrations
+
+  여기서 연결된 서비스(Gmail, Calendar, Notion 등)를 개별적으로 disconnect하면 Claude Code에서도 더 이상 로드되지 않습니다.
+  
+  ---
+  정리
+  
+  ┌────────────────┬──────────────────────────────────────┬────────────────────────────────────────┐
+  │      종류      │             네이밍 패턴              │               관리 위치                │
+  ├────────────────┼──────────────────────────────────────┼────────────────────────────────────────┤
+  │ 로컬 MCP       │ mcp__playwright__*, mcp__context7__* │ .mcp.json / ~/.claude/mcp.json         │
+  ├────────────────┼──────────────────────────────────────┼────────────────────────────────────────┤
+  │ claude.ai 통합 │ mcp__claude_ai_Gmail__* 등           │ claude.ai 웹 → Settings → Integrations │
+  └────────────────┴──────────────────────────────────────┴────────────────────────────────────────┘
+  
+  이 프로젝트에서 Gmail/Notion 등이 필요 없다면 claude.ai에서 disconnect하는 게 컨텍스트 절약에 가장 효과적입니다.
+  
+✻ Baked for 17s
+  
+❯ ❯ /mcp                                                                                                                                                                                  
+                                                                                                                                                                                          
+                                                                                                                                                                                          
+  ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+  ───                                                                                                                                                                                     
+    Manage MCP servers                                                                                                                                                                    
+    10 servers                                                                                                                                                                            
+                                                                                                                                                                                          
+      Project MCPs (/Users/jinsu.kim/job/study/claude/claude-nextjs-starters/.mcp.json)                                                                                                   
+    ❯ context7 · ✔ connected · 2 tools                                                                                                                                                    
+      playwright · ✔ connected · 23 tools                                                                                                                                                 
+      sequential-thinking · ✔ connected · 1 tool                                                                                                                                          
+      shad                                                                                                                                                                                
+  
+⏺ 보여주신 내용이 중간에 잘렸는데, 스크롤하면 아마 이런 구조일 겁니다:
+
+  10 servers
+
+    Project MCPs (.mcp.json)
+    ❯ context7         · ✔ connected · 2 tools
+      playwright       · ✔ connected · 23 tools
+      sequential-thinking · ✔ connected · 1 tool
+      shadcn           · ✔ connected · ...
+
+    claude.ai MCPs  ← 이 섹션에
+      Gmail            · ✔ connected
+      Google Calendar  · ✔ connected
+      Notion           · ✔ connected
+      Google Drive     · ✔ connected
+      ...
+
+  /mcp 다이얼로그에서 항목을 선택하면 세션 내 임시 비활성화 가 가능하지만, 영구적으로 끄려면 앞서 말한 대로 claude.ai 웹 Settings → Integrations에서 disconnect해야 합니다.
+
+  나머지 하단 내용도 공유해주시면 정확히 어떤 서버들이 어느 섹션에 있는지 확인할 수 있습니다.
+
+✻ Brewed for 11s
+
+※ recap: MCP 활성화/비활성화 방법을 알아보는 중이었습니다. 다음은 /mcp 다이얼로그의 전체 화면을 공유해서 claude.ai 통합 MCP 섹션을 확인하는 것입니다. (disable recaps in /config)
+
+❯ [Image #4]  어디서 해야해?                                                                                                                                                              
+  ⎿  [Image #4]
+
+⏺ claude.ai 웹에서 찾아야 합니다.
+
+  경로:
+
+  1. 좌측 하단 "김진수 · Pro" 클릭
+  2. Settings 선택
+  3. Integrations 탭 → 연결된 Gmail, Calendar, Notion 등 disconnect
+
+  또는 화면 상단의 "인티큐브 음성봇" 옆 워크스페이스 이름 클릭 → Settings에서도 접근 가능합니다.
+
+※ recap: MCP 활성화/비활성화 방법을 알아보는 중이었습니다. 다음은 /mcp 다이얼로그의 전체 화면을 공유해서 claude.ai 통합 MCP 섹션을 확인하는 것입니다. (disable recaps in /config)
+
+❯ [Image #4]  어디서 해야해?                                                                                                                                                              
+  ⎿  [Image #4]
+
+⏺ claude.ai 웹에서 찾아야 합니다.
+
+  경로:
+
+  1. 좌측 하단 "김진수 · Pro" 클릭
+  2. Settings 선택
+  3. Integrations 탭 → 연결된 Gmail, Calendar, Notion 등 disconnect
+
+  또는 화면 상단의 "인티큐브 음성봇" 옆 워크스페이스 이름 클릭 → Settings에서도 접근 가능합니다.
+
+✻ Sautéed for 9s
+
+❯ [Image #5] 뭘 선택?                                                                                                                                                                     
+  ⎿  [Image #5]
+
+⏺ 커넥터 를 선택하세요.
+
+  좌측 메뉴에서 커넥터 → Gmail, Google Calendar, Notion, Google Drive 연결 목록이 나오면 필요 없는 것들을 disconnect할 수 있습니다.
+
+✻ Worked for 5s
+
+❯ [Image #6] 뭘 선택?                                                                                                                                                                     
+  ⎿  [Image #6]
+
+⏺ 현재 웹 섹션에 연결된 것들이 보입니다:
+
+  - Gmail → 클릭 후 "연결 해제"
+  - Google Calendar → 클릭 후 "연결 해제"
+  - Notion → 클릭 후 "연결 해제"
+  - PlayMCP → 필요 없으면 "연결 해제"
+
+  GitHub는 개발에 유용하니 유지하는 게 좋습니다. Google Drive는 이미 "연결되지 않음" 상태라 그대로 두면 됩니다.
+
+  위 3개(Gmail, Google Calendar, Notion)를 disconnect하면 컨텍스트에서 해당 도구들이 사라집니다.
+
+✻ Worked for 10s
+
+❯ PlayMCP도 뭔지 설명해줘                                                                                                                                                                 
+
+⏺ 이 대화의 시스템 정보에 설명이 있었습니다.
+
+  ▎ PlayMCP — 카카오에서 공식적으로 제공하는 MCP 서버. 사용자 정보 보호를 최우선으로 한다고 명시되어 있음.
+
+  스크린샷의 노란 "k" 아이콘도 카카오 관련임을 나타냅니다.
+
+  카카오 서비스(카카오톡, 카카오맵 등)와 연동해 Claude에서 카카오 관련 작업을 할 수 있게 해주는 서버입니다. Next.js 개발에는 필요 없으니 disconnect해도 무방합니다.
+
+
 ```
 
 ====================================
 ```
+<< 유용한 MCP Servers 설치 >>
+[conext7]
+1) Local Server
+claude mcp add --scope user context7 -- npx -y @upstash/context7-mcp --api-key YOUR_API_KEY
+
+2) Remote Server: 이 버전으로 설치한다.
+claude mcp add --scope user --transport http context7 https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: YOUR_API_KEY"
+claude mcp add --scope user --transport http context7 https://mcp.context7.com/mcp => 실제 설치 시에는 header 는 빼고 한다.
+claude mcp add --scope user --transport http context7 https://mcp.context7.com/mcp --scope project => 최종적으로 scope 을 project 로 설정한다. 그런데 아래처럼 context7 추가 된다.
+
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ],
+      "env": {}
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    }
+  }
+}
+
+[sequential thinking mcp server]
+# 'sequential thinking mcp server' 구글링
+https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking
+
+- npx 내의 설정 내용을 복사해서 활용
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    }
+  }
+}
+
+- 아래 내용을 .mcp.json 붙여넣기.
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    }
+
+# sequential thinking MCP 설치 확인
+❯ /mcp                                                                                                                                                                                    
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Manage MCP servers
+  9 servers
+
+    Project MCPs (/Users/jinsu.kim/job/study/claude/claude-nextjs-starters/.mcp.json)
+  ❯ context7 · ✔ connected · 2 tools
+    playwright · ✔ connected · 23 tools
+    sequential-thinking · ✔ connected · 1 tool
+
+    claude.ai
+    claude.ai Gmail · ✔ connected · 12 tools
+    claude.ai Google Calendar · ✔ connected · 8 tools
+    claude.ai Notion · ✔ connected · 18 tools
+    claude.ai PlayMCP · △ connected · no tools
+    → Show unused connectors (1)
+
+    Built-in MCPs (always available)
+    computer-use · ◯ disabled
+
+  https://code.claude.com/docs/en/mcp for help
+ ↑/↓ to navigate · Enter to confirm · Esc to cancel
+
+
+# 예시
+- 프롬프트: use sequential thinking 넣으면 명시적으로 사용 됨. plan mode 로 실행.
+당신은 Next.js 웹 개발 전문가입니다.
+현재 프로젝트 코드베이스를 분석해서 클로드 코드 메모리 파일인 @CLAUDE.md 파일을 최적화해주세요.
+use sequential thinking
+
+- 권한 승인 요청할 때 2번을 선택하면 .settings.local.json 에 아래 내용 추가(mcp_playwright, mcp__sequential-thinking__sequentialthinking)
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "WebSearch",
+      "mcp_playwright",
+      "mcp__sequential-thinking__sequentialthinking"
+    ],
+
+- mcp__sequential-thinking__sequentialthinking > mcp__sequential-thinking 바꾸어서 모든 mcp 서버 이용하도록 수정. 그래서 다음과 같이 수정한다. 그러면 자유롭게 처리한다.
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "WebSearch",
+      "mcp_playwright",
+      "mcp__sequential"
+    ],
+    "deny": [],
+    "ask": []
+  },
+
+[shadcnui mcp]
+# 검색
+- 'shadcnui mcp' 구글링
+- AI 가 shadcnui 효율적으로 사용하고 컴포넌트 문서나 예제롤 더 빠르게 가져올 수 있도록 도와주는 공식 MCP Server
+- Claude Code 의 npm 탭에서 설치 명령어 활용
+npx shadcn@latest mcp init --client claude
+
+# 설치
+- 설치
+jinsu.kim@jinsukimui-MacBookPro claude-nextjs-starters % npx shadcn@latest mcp init --client claude
+✔ Configuring MCP server.
+✔ Installing dependencies.
+
+Configuration saved to .mcp.json.
+
+- 확인해보니 잘 설치
+❯ /mcp                                                                                                                                                                                    
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Manage MCP servers
+  10 servers
+
+    Project MCPs (/Users/jinsu.kim/job/study/claude/claude-nextjs-starters/.mcp.json)
+  ❯ context7 · ✔ connected · 2 tools
+    playwright · ✔ connected · 23 tools
+    sequential-thinking · ✔ connected · 1 tool
+    shadcn · ✔ connected · 7 tools
+
+    claude.ai
+    claude.ai Gmail · ✔ connected · 12 tools
+    claude.ai Google Calendar · ✔ connected · 8 tools
+    claude.ai Notion · ✔ connected · 18 tools
+    claude.ai PlayMCP · △ connected · no tools
+    → Show unused connectors (1)
+
+    Built-in MCPs (always available)
+
+# 예시
+- 프롬프트
+shadcn UI를 사용해서 간단한 로그인 페이지를 만들어줘.
+
+다음 요구사항을 포함해야 해:
+1. 이메일 입력 필드
+2. 비밀번호 입력 필드
+3. "로그인하기" 버튼
+4. "회원가입" 링크
+5. 전체적으로 카드 형태로 중앙 정렬
+
+디자인은 깔끔하고 현대적으로 만들어주고,
+반응형도 고려해서 모바일에서 잘 보이도록 해줘.
+use shadcnui mcp server
+
+- 사용 승인 허용(2번) 선택하면 자동으로 .settings.local.json 의 allow 에 추가된다.
+{
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "WebSearch",
+      "mcp_playwright",
+      "mcp__sequential-thinking",
+      "mcp__shadcn__search_items_in_registries"
+    ],
+    "deny": [],
+    "ask": []
+  },
+}
+
+- 이번에서 mcp__shadcn 모든 도구 사용을 위해서 내용 변경
+{
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "WebSearch",
+      "mcp_playwright",
+      "mcp__sequential-thinking",
+      "mcp__shadcn"
+    ],
+    "deny": [],
+    "ask": []
+  },
+}
+
 ```
 
 ====================================
