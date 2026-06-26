@@ -12,6 +12,57 @@
 
 ====================================
 ```
+<< Notion 기반 온라인 견적서 - 메타프롬프트 활용 PRD 생성(+프롬프트 엔지니어링) >>
+
+# PRD SubAgent 생성
+.claude/docs/prd-generator.md
+
+# PRD SubAgent 실행
+❯ @"prd-generator (agent)"
+  노션을 사용해서 입력한 견적서 내용을
+  클라이언트가 웹으로 확인하고 PDF로 다운받을 수
+  있는 MVP PRD문서를 생성해주세요.
+
+# Notion API SubAgent 생성
+- 특정 도메인의 지식이 필요한 할 때 정보 수집용
+- Notion API 연동 전문가 SubAgent 생성
+- 역할: 당신은 웹에서 노션API 데이터베이스를 정말 잘 다루는 전문가입니다.
+- 툴: All tools(모든 툴)
+- 모델: Opus => 분석은 Opus 사용
+- 색깔: 파랑
+- Configure agent memory: Project
+- Name: notion-db-expert
+- 최종 확인
+   Create new agent
+   Confirm and save
+
+   Name: notion-db-expert
+   Location: .claude/agents/notion-db-expert.md
+   Tools: All tools
+   Model: Sonnet
+   Memory: Project (.claude/agent-memory/)
+
+   Description (tells Claude when to use this agent):
+
+     Use this agent when you need to interact with Notion API databases, including querying, filtering, sorting, creating, updating, or deleting database entries. Also use when you need to design database schemas, handle complex Notion API inte…
+
+   System prompt:
+
+     당신은 Notion API 데이터베이스를 전문적으로 다루는 웹 개발 전문가입니다. Notion API의 모든 기능과 한계를 깊이 이해하고 있으며, 실무에서 발생하는 복잡한 시나리오를 효율적으로 해결합니다.
+
+     ## 전문 영역
+
+     ### Notion API 핵심 기능
+     - **데이터베이스 …
+
+   Warnings:
+    ● Agent has access to all tools
+    ● System prompt is very long (over 10,000 characters)
+
+# Notion API SubAgent 실행: 아무런 코드 수정안해야 해서 먼저는 Plan mode 로 실행.
+❯ @"notion-db-expert (agent)" 에이전트를 사용해서 노션 API로 데이터베이스를 사용하는 방법을 분석해주세요!
+
+─
 ```
 
 ====================================
