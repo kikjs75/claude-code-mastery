@@ -16,6 +16,47 @@
 
 ====================================
 ```
+<< Notion 기반 온라인 견적서 - 메타프롬프트 활용 PRD 생성(+MVP) >>
+
+# 프로젝트 생성
+- 참조: 만든 StartKit 활용. clone 해서 활용
+git clone https://github.com/kikjs75/claude-nextjs-starters.git invoice-web
+
+# 의존 라이브러리 설치
+- 프로젝트 루트(invoice-web) 에서 명령어 실행.
+npm i
+
+# 프로젝트 요구사항 문서(Project Requirement Document, PRD)
+- 정의: 프로젝트의 목적, 범위, 기능, 특징 등을 정의하는 문서. 팀원과 이해관계자 간의 명확한 소통과 프로젝트 목표 달성을 위한 가이드 역할을 한다.
+- 이 문서는 Claude Code 에도 맥락을 이해하는데 도움을 준다.
+
+[claude code 에 모든 권한 위임]
+claude --dangerously-skip-permissions
+
+[메타 프롬프트 활용]
+메타 프롬프트 -> 프롬프트 => PRD.md 생성
+- 직접 프롬프트 생성 보다 메타 프롬프트 이용해서 프롬프트 생성이 낫다.
+- 공식 문서에는 '프롬프트 생성기' 또는 'Console 프롬프트 도구' 제목으로 설명한다. => https://platform.claude.com/docs/ko/build-with-claude/prompt-engineering/prompting-tools
+- 해당 공식 문서에 프롬프트 생성기 URL 있음: https://platform.claude.com/dashboard => 먼저는 대시보드 나온다. API 키 이용한다고 한다. 그러나 여기서는 Claude Code 활용.
+
+[메타 프롬프트 생성 프롬프트]
+- MVP(Minimum Viable Product), 제품의 핵심 가치를 검증하기 위해 최소한의 기능만을 구현한 시제품 의미. 시장 검증을 통해서 필요성을 증명해 나가면서 개발.
+- 애자일 방법론: 변화하는 요구사항에 신속하게 유연하게 대응하며, 짧은 주기로 반복적인 개발과 피드백을 통해 작동 가능한 결과물을 점진적으로 만들어가는 소프트웨어 개발 방식.
+
+당신은 클로드 코드 프롬프트 엔지니어 입니다.
+노션을 사용해서 입력한 견적서 내용을
+클라이언트가 웹으로 확인하고 PDF로 다운받을 수 있는
+MVP(Minimum Viable Product) PRD문서를 작성하는 메타 프롬프트를 생성해주세요.
+
+참고사항:\
+- '/Users/jinsu.kim/job/study/claude/invoice-web/CLAUDE.md'  
+- 파일위치: docs/PRD_PROMPT.md
+
+[프롬프트 생성]
+{PRD_PROMPT.md 내용}
+파일 위치: docs/PRD.md
+
+메타 프롬프트를 실행해서 docs/PRD.md를 작성하겠습니다.
 ```
 
 ====================================
