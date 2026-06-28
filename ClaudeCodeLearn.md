@@ -12,6 +12,530 @@
 
 ====================================
 ```
+```
+
+====================================
+```
+```
+
+====================================
+```
+```
+
+====================================
+```
+```
+
+====================================
+```
+```
+
+====================================
+```
+```
+
+====================================
+```
+<< 작업관리 도구(Task Manager) - Cursor rules(짐코딩 유튜브) >>
+[User Rules]
+- cursor 설정 화면 > User Rules 에서 다음의 프롬프트
+  전문성 및 기본태도:
+  - 전문가 수준의 코드를 작성하되. 불필요하게 복잡하지 않게 구현
+  - 명확하고 읽기 쉬운 코드에 중점
+  - 사용자를 전문가로 대우하여 간결한 답변 제공...
+
+- cursor 설정 화면 > User Rules 에서 다음의 새로운 프롬프트
+  내 개인 취향:
+  - 코드 설명할 때 한글로 주석 달아줘
+  - 변수명은 누가 봐도 알 수 있게 명확하게 지어줘
+  - 에러가 날 수 있는 부분은 미리 처리해줘
+  - 코드가 길어지면 작은 ㅎ마수로 나눠줘
+
+[Memories]
+- cursor 설정 화면 > Memories 그룹에서 Generate Memories 선택
+  => 이렇게 하면 채팅하면 사용자의 선호도 기억.
+- cursor 설정 화면 > Memories 그룹에서 Manage Memories 의 Show 선택
+  => 기억된 선호도 볼 수 있고 수정할 수 있음.
+- 기능이 베터 버전이기에 지금은 비활성회.
+
+[Project Rules]
+- name: project-structure.mdc
+- rule types
+  - Always(항상)
+  - Auto Attached(자동 첨부): 특정 파일 타입 시 적용. 
+    - 예시
+      - 파일타입: **/*.tsx => 리액트 컴포넌트)
+      - 프롬프트
+        - 컴포넌트 이름은 PascalCase로 작성합니다.
+        - props는 interface로 정의합니다.
+        - 스타일은 Tailwind CSS를 사용합니다.
+  - Agent Requested(에이전트 요청 시): AI 가 결정
+    - 예시
+      - Description: API 엔드포인트 작성 규칙
+      - 프롬프트
+        - 모든 API는 RESTful 원칙을 따릅니다.
+        - 에러 처리는 try-catch로 구현합니다.
+        - 응답은 JSON 형식으로 반환합니다.
+  - Manual(수동): @ruleName 으로 명시적으로 지정
+    - 예시
+      - mdc 파일명: db-template.mdc
+      - 프롬프트
+        - SQL 쿼리는 대문자로 작성합니다.
+        - 테이블 이름은 snake_case를 사용합니다.
+        - 인덱스는 성능을 고려하여 생성합니다.
+      - 이렇게 하면 curosr ai 에 요청할 때 @db-template 언급하며 사용 가능.
+      - 이런 Project Rules 의 Manual 은 Notepad 기능으로 사용되어져 왔으나 베터 버전이여서 제거될 수 있다.
+      - 다음과 같이 자주 사용한다. 
+        @https://cursor.com/en-US/docs/rules
+        - 위 링크를 번역해줘.
+        - 이해하기 쉽도록 예시를 포함해서 설명해줘.
+      - 매번 이렇게 하기 번거로우니 Project Rules Manual 등록
+      - mdc 파일명: docs.mdc
+      - 프롬프트
+        - 위 링크를 번역해줘.
+        - 이해하기 쉽도록 예시를 포함해서 설명해줘.
+
+[Nested rules]
+- .cursor/ruels 을 하위 디렉토리별로 두어서 범위를 제한한다.
+
+[Generating rules]
+- rules 을 수동으로 하지 않고 자동으로 생성.
+- 예시
+  - 대화 중에 반복적인 규칙을 cursor ai 와 채팅으로 이야기 나누고 있었으면 /Generate Cursor Rules 명령허면 대화 내용을 기반으로 자동으로 rules 생성한다.
+
+[모범 사례(Best Practices)]
+- 좋은 규칙은 집중적이고, 실행 가능하며, 범위가 명확하다.
+  - 규칙은 간결하게 유지하세요. 500줄 미만이 좋은 목표입ㄴ다.
+  - 대규모 개념을 여러 개의 구성 가능한 규칙으로 분할
+  - 도움이 되는 경우 구체적인 예나 참조 파일을 제공하세요.
+  - 모호한 지침은 피하세요. 명확한 내부 문서를 작성하듯 규칙을 작성하세요.
+  - 채팅에서 메시지를 반복해서 입력하는 경우 규칙을 재사용하세요.
+
+[cursor.directory]
+- https://cursor.directory/URL: https://cursor.directory/
+- 컨텍스트 공유 사이트
+- 기술 스택별 rules 참조
+
+
+
+
+
+```
+
+
+====================================
+```
+<< 작업관리 도구(Task Manager) -  laude Task Master >>
+[설치]
+- 전역으로 설치
+- 전역 설치 후 실행 시 react 의존성 있으면 react 도 전역으로 설치
+
+[Task Master 초기화]
+- cursor ai 로 빈 프로젝트 폴더 열기
+- Task Master 초기화: task-master init
+
+jinsu.kim@jinsukimui-MacBookPro task-master-ai % task-master init
+  _____         _      __  __           _            
+ |_   _|_ _ ___| | __ |  \/  | __ _ ___| |_ ___ _ __ 
+   | |/ _` / __| |/ / | |\/| |/ _` / __| __/ _ \ '__|
+   | | (_| \__ \   <  | |  | | (_| \__ \ ||  __/ |   
+   |_|\__,_|___/_|\_\ |_|  |_|\__,_|___/\__\___|_|   
+                                                     
+by x.com/eyaltoledano
+Taskmaster for teams: tryhamster.com
+
+You need a plan before you execute.
+
+? How do you want to build it?
+
+✔ How do you want to build it?
+ Solo (Taskmaster)
+Initialize a Git repository in project root? ✓ Yes
+Store tasks in Git (tasks.json and tasks/ directory)? ✓ Yes
+Set up AI IDE rules for better integration? ✓ Yes
+
+Taskmaster Project Settings:
+──────────────────────────────────────────────────
+  Storage:                         Local File Storage
+  AI IDE rules:                    ✓ Yes
+  Response language:               Korean
+  Initialize Git repository:       ✓ Yes
+  Store tasks in Git:              ✓ Yes
+──────────────────────────────────────────────────
+
+→ Created directory: /Users/jinsu.kim/job/study/claude/task-master-ai/.taskmaster
+→ Created directory: /Users/jinsu.kim/job/study/claude/task-master-ai/.taskmaster/tasks
+→ Created directory: /Users/jinsu.kim/job/study/claude/task-master-ai/.taskmaster/docs
+→ Created directory: /Users/jinsu.kim/job/study/claude/task-master-ai/.taskmaster/reports
+→ Created directory: /Users/jinsu.kim/job/study/claude/task-master-ai/.taskmaster/templates
+✓ Created initial state file: /Users/jinsu.kim/job/study/claude/task-master-ai/.taskmaster/state.json
+→ Default tag set to "master" for task organization
+→ Created file: /Users/jinsu.kim/job/study/claude/task-master-ai/.env.example
+→ Created file: /Users/jinsu.kim/job/study/claude/task-master-ai/.taskmaster/config.json
+✓ Created /Users/jinsu.kim/job/study/claude/task-master-ai/.gitignore with full template
+→ Created file: /Users/jinsu.kim/job/study/claude/task-master-ai/.taskmaster/templates/example_prd.txt
+→ Created file: /Users/jinsu.kim/job/study/claude/task-master-ai/.taskmaster/templates/example_prd_rpg.txt
+→ Initializing Git repository due to --git flag...
+✓ Git repository initialized
+
+╭──────────────────────────────────────────────────────────╮
+│ Configuring Rule Profiles...                             │
+╰──────────────────────────────────────────────────────────╯
+→ Running interactive rules setup. Please select which rule profiles to include.
+  _____         _      __  __           _            
+ |_   _|_ _ ___| | __ |  \/  | __ _ ___| |_ ___ _ __ 
+   | |/ _` / __| |/ / | |\/| |/ _` / __| __/ _ \ '__|
+   | | (_| \__ \   <  | |  | | (_| \__ \ ||  __/ |   
+   |_|\__,_|___/_|\_\ |_|  |_|\__,_|___/\__\___|_|   
+                                                     
+by x.com/eyaltoledano                                                                                                                                              v0.43.1
+Taskmaster for teams: tryhamster.com
+
+
+╭───────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                           │
+│   Rule Profiles Setup                                                                     │
+│                                                                                           │
+│   Rule profiles help enforce best practices and conventions for Task Master.              │
+│   Each profile provides coding guidelines tailored for specific AI coding environments.   │
+│                                                                                           │
+│   Available Profiles:                                                                     │
+│   • Amp - Integration guide and MCP config                                                │
+│   • Claude Code - Integration guide with Task Master slash commands                       │
+│   • Cline - Rule profile                                                                  │
+│   • Codex - Comprehensive Task Master integration guide                                   │
+│   • Cursor - Rule profile and MCP config                                                  │
+│   • Gemini - Integration guide and MCP config                                             │
+│   • Kilo Code - Rule profile and MCP config                                               │
+│   • Kiro - Rule profile and MCP config                                                    │
+│   • OpenCode - Integration guide and MCP config                                           │
+│   • Roo Code - Rule profile, MCP config, and agent modes                                  │
+│   • Trae - Rule profile                                                                   │
+│   • VS Code - Rule profile and MCP config                                                 │
+│   • Windsurf - Rule profile and MCP config                                                │
+│   • Zed - Integration guide and MCP config                                                │
+│                                                                                           │
+╰───────────────────────────────────────────────────────────────────────────────────────────╯
+
+? Which rule profiles would you like to add to your project?
+❯◯ Amp
+ ◯ Claude Code
+✔ Which rule profiles would you like to add to your project? Cursor
+Installing 1 selected profile(s)...
+Processing profile 1/1: cursor...
+[INFO] Setting up MCP configuration at /Users/jinsu.kim/job/study/claude/task-master-ai/.cursor/mcp.json...
+[SUCCESS] Created MCP configuration file at /Users/jinsu.kim/job/study/claude/task-master-ai/.cursor/mcp.json
+[INFO] MCP server will use the installed task-master-ai package
+Summary for cursor: 4 files processed, 0 failed.
+
+Completed installation of all 1 profile(s).
+✓ Rule profiles configured.
+
+╭──────────────────────────────────────────────────────────╮
+│ Configuring AI Models...                                 │
+╰──────────────────────────────────────────────────────────╯
+→ Running interactive model setup. Please select your preferred AI models.
+  _____         _      __  __           _            
+ |_   _|_ _ ___| | __ |  \/  | __ _ ___| |_ ___ _ __ 
+   | |/ _` / __| |/ / | |\/| |/ _` / __| __/ _ \ '__|
+   | | (_| \__ \   <  | |  | | (_| \__ \ ||  __/ |   
+   |_|\__,_|___/_|\_\ |_|  |_|\__,_|___/\__\___|_|   
+                                                     
+by x.com/eyaltoledano                                                                                                                                              v0.43.1
+Taskmaster for teams: tryhamster.com
+
+(node:57865) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Starting interactive model setup...
+
+🎯 Interactive Model Setup
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 Navigation tips:
+   • Type to search and filter options
+   • Use ↑↓ arrow keys to navigate results
+   • Standard models are listed first, custom providers at bottom
+   • Press Enter to select
+
+✔ Select the main model for generation/updates: Cancel
+✓ AI Models configured.
+
+   ╔══════════════════════════════════════════════════════════╗
+   ║                                                          ║
+   ║     ____                              _                  ║
+   ║    / ___| _   _  ___ ___ ___  ___ ___| |                 ║
+   ║    \___ \| | | |/ __/ __/ _ \/ __/ __| |                 ║
+   ║     ___) | |_| | (_| (_|  __/\__ \__ \_|                 ║
+   ║    |____/ \__,_|\___\___\___||___/___(_)                 ║
+   ║                                                          ║
+   ║   Project initialized successfully!                      ║
+   ║                                                          ║
+   ╚══════════════════════════════════════════════════════════╝
+
+╭──────────────────────────────────────────────────────────╮
+│                                                          │
+│   Workflow                                               │
+│                                                          │
+│   Things you should do next:                             │
+│                                                          │
+│   1. Configure AI models and add API keys to `.env`      │
+│   ├─ Models: Use task-master models commands             │
+│   └─ Keys: Add provider API keys to .env (or             │
+│   .cursor/mcp.json)                                      │
+│   2. Discuss your idea with AI and create a PRD          │
+│   ├─ Simple projects: Use example_prd.txt template       │
+│   └─ Complex systems: Use example_prd_rpg.txt template   │
+│   3. Parse your PRD to generate initial tasks            │
+│   └─ CLI: task-master parse-prd                          │
+│   .taskmaster/docs/prd.txt                               │
+│   4. Analyze task complexity                             │
+│   └─ CLI: task-master analyze-complexity --research      │
+│   5. Expand tasks into subtasks                          │
+│   └─ CLI: task-master expand --all --research            │
+│   6. Start working on tasks                              │
+│   └─ CLI: task-master next                               │
+│   7. Ship it!                                            │
+│                                                          │
+│   * Run task-master --help to see all available          │
+│   commands                                               │
+│   * Run tm rules --setup to configure AI IDE rules for   │
+│   better integration                                     │
+│                                                          │
+╰──────────────────────────────────────────────────────────╯
+
+jinsu.kim@jinsukimui-MacBookPro task-master-ai % 
+
+[task-maser 도움말]
+jinsu.kim@jinsukimui-MacBookPro task-master-ai % task-master
+(node:37111) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+TUI mode coming soon!
+Showing help instead...
+
+
+╭─────────────────────╮
+│                     │
+│   Task Master CLI   │
+│                     │
+╰─────────────────────╯
+
+
+╭─────────────────────────────────╮
+│  Project Setup & Configuration  │
+╰─────────────────────────────────╯
+    init                            [--name=<name>] [--description=<desc>] [-y]            Initialize a new project with Task Master structure     
+    models                                                                                 View current AI model configuration and available       
+                                                                                           models                                                  
+    models --setup                                                                         Run interactive setup to configure AI models            
+    models --set-main               <model_id>                                             Set the primary model for task generation               
+    models --set-research           <model_id>                                             Set the model for research operations                   
+    models --set-fallback           <model_id>                                             Set the fallback model (optional)                       
+
+
+╭───────────────────╮
+│  Task Generation  │
+╰───────────────────╯
+    parse-prd                       --input=<file.txt> [--num-tasks=10]                    Generate tasks from a PRD document                      
+    generate                                                                               Create individual task files from tasks.json            
+
+
+╭───────────────────╮
+│  Task Management  │
+╰───────────────────╯
+    list                            [<status>|all] [-s <status>] [-t <tag>]                List all tasks - use "all" to show with subtasks        
+    list                            [--with-subtasks] [-f <format>] [--json] [-c]          Options: format (text/json/compact), subtasks           
+    list                            [-w] [--ready] [--blocking] [--all-tags]               Options: watch mode, ready/blocking filters, all tags   
+    set-status                      <id> <status>                                          Update task status (pending, done, in-progress, review, 
+                                                                                           deferred, cancelled)                                    
+    sync-readme                     [--with-subtasks] [--status=<status>]                  Export tasks to README.md with professional formatting  
+    update                          --from=<id> --prompt="<context>"                       Update multiple tasks based on new requirements         
+    update-task                     <id> <prompt...>                                       Update a single task (no quotes needed for multi-word   
+                                                                                           prompts)                                                
+    update-subtask                  --id=<parentId.subtaskId> --prompt="<context>"         Append additional information to a subtask              
+    add-task                        --prompt="<text>" [--dependencies=<ids>]               Add a new task using AI                                 
+                                    [--priority=<priority>]                                                                                        
+    remove-task                     --id=<id> [-y]                                         Permanently remove a task or subtask                    
+
+
+╭──────────────────────╮
+│  Subtask Management  │
+╰──────────────────────╯
+    add-subtask                     --parent=<id> --title="<title>"                        Add a new subtask to a parent task                      
+                                    [--description="<desc>"]                                                                                       
+    add-subtask                     --parent=<id> --task-id=<id>                           Convert an existing task into a subtask                 
+    remove-subtask                  --id=<parentId.subtaskId> [--convert]                  Remove a subtask (optionally convert to standalone      
+                                                                                           task)                                                   
+    clear-subtasks                  --id=<id>                                              Remove all subtasks from specified tasks                
+    clear-subtasks --all                                                                   Remove subtasks from all tasks                          
+
+
+╭─────────────────────────────╮
+│  Task Analysis & Breakdown  │
+╰─────────────────────────────╯
+    analyze-complexity              [--research] [--threshold=5]                           Analyze tasks and generate expansion recommendations    
+    complexity-report               [--file=<path>]                                        Display the complexity analysis report                  
+    expand                          --id=<id> [--num=5] [--research]                       Break down tasks into detailed subtasks                 
+                                    [--prompt="<context>"]                                                                                         
+    expand --all                    [--force] [--research]                                 Expand all pending tasks with subtasks                  
+    research                        "<prompt>" [-i=<task_ids>] [-f=<file_paths>]           Perform AI-powered research queries with project        
+                                    [-c="<context>"] [--tree] [-s=<save_file>]             context                                                 
+                                    [-d=<detail_level>]                                                                                            
+
+
+╭─────────────────────────────╮
+│  Task Navigation & Viewing  │
+╰─────────────────────────────╯
+    next                                                                                   Show the next task to work on based on dependencies     
+    show                            <id>                                                   Display detailed information about a specific task      
+
+
+╭──────────────────╮
+│  Tag Management  │
+╰──────────────────╯
+    tags                            [list] [--show-metadata] [--ready]                     List all available tags with task counts                
+    tags add                        <name> [--description <desc>] [--copy-from <tag>]      Create a new tag (--from-branch for git branch name)    
+    tags use                        <name>                                                 Switch to a different tag context                       
+    tags remove                     <name> [-y]                                            Delete an existing tag and all its tasks                
+    tags rename                     <oldName> <newName>                                    Rename an existing tag                                  
+    tags copy                       <source> <target> [--description <desc>]               Copy a tag with all its tasks                           
+
+
+╭─────────────────────────╮
+│  Dependency Management  │
+╰─────────────────────────╯
+    add-dependency                  --id=<id> --depends-on=<id>                            Add a dependency to a task                              
+    remove-dependency               --id=<id> --depends-on=<id>                            Remove a dependency from a task                         
+    validate-dependencies                                                                  Identify invalid dependencies without fixing them       
+    fix-dependencies                                                                       Fix invalid dependencies automatically                  
+
+
+╭─────────────────╮
+│  Configuration  │
+╰─────────────────╯
+    .taskmaster/config.json                 AI model configuration file (project root)                             Managed by models cmd           
+    API Keys (.env)                         API keys for AI providers (ANTHROPIC_API_KEY, etc.)                    Required in .env file           
+    MCP Keys (mcp.json)                     API keys for Cursor integration                                        Required in .cursor/            
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│   Quick Start:                                                                                   │
+│                                                                                                  │
+│   1. Create Project: task-master init                                                            │
+│   2. Setup Models: task-master models --setup                                                    │
+│   3. Parse PRD: task-master parse-prd --input=<prd-file>                                         │
+│   4. List Tasks: task-master list                                                                │
+│   5. Find Next Task: task-master next                                                            │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+[모델 설정]
+- task-master github: https://github.com/eyaltoledano/claude-task-master
+- ~/docs/models.md: 사용 가능한 모델
+  - SWE Score: AI 얼마나 코딩 잘하는지. 0~1 사이값. 클수록 품질 좋다.
+  - Input Cost(1백만 토큰당): 입력 요금
+  - OUtput Cost(1백만 토큰당): 답변 요금
+- task-master models --setup 명령어로 main, research, fallback 설정
+  - main: claude-sonnet-4-20250514
+  - research: gpt-4o-mini-search-preview
+  - fallback: claude-3-7-sonnet-20250219
+
+[PRD 생성]
+- 다음의 프롬프트로 생성(Claude Chat)
+모바일 청첩장 웹PRD문서를 만들어줘~!
+## 요구사항
+* 헤더와 푸터가 없는 원페이지 랜딩페이지~!
+* 모던한 UI/UX
+* 생동감 있는 트랜지션 효과
+* TailwindCSS 사용
+
+- .taskmaster/templates/example_prd.txt 내용을 붙여넣기 후 재작성 요청
+PRD 문서를 아래의 형식으로 수정해줘.
+
+- 내용을 꼼꼼히 읽고 현재 내게 필요한 사항으로 범위를 좁힌다. 아래와 같이 프롬프트한다.
+백엔드, 인프라 등 너무 한번에 개발하려면 너무 힘들것 같아
+우선 UI만 개발할 수 있도록 PRD 문서를 수정해줘.
+
+[PRD로 부터 Task 생성]
+- 콘솔에서 명령어로 하면 .env 파일 있어야 한다. .env.example 복사해서 만든다
+- .env 에 존재하는 키만 남기고 지운다.
+ANTHROPIC_API_KEY=""
+OPENAI_API_KEY=""
+
+[구현]
+- task-master list 으로 단계별 내용 확인 후 채팅창에서 구현 요청.
+Next Task: #1 - 프로젝트 초기화 및 환경 설정 
+작업을 진행해줘.
+ => 다 끝나고 task-master list 으로 확인하면 done 으로 표시. 이제 다음 단계 요청.
+
+#2 - Hero Section 구현 
+작업을 구현해줘.
+ => 계속 단계별로 요청하고 확인하고 문제 있으면 수정한다.
+
+ [Task-Master vs. Shrimp Task Manager]
+ 1) Task-Master
+ - 사용자와 AI가 협력해서 체계적으로 개발
+ - 협업 스타일. PRD 문서 있으면 지속적으로 물어보면 그에 대응헤서 상의하면서 진행.
+ 2) Shrimp Task Manager
+ - AI 개발자가 되어 주도적으로 개발
+ - 시니어 개발자를 두고 하는 것 같아. 지시하면 자동으로 하며 점점 똑똑해진다.
+```
+
+====================================
+```
+<< 작업관리 도구(Task Manager) >>
+- Claude Task Master, Shrimp Task Manager 의 유튜브 동영상 소개
+  - Claude Task Master(짐코딩 유튜브)
+    - https://www.youtube.com/watch?v=p-FucXNL9Lc
+    - https://github.com/eyaltoledano/claude-task-master#readme
+  - Shrimp Task Manager(짐코딩 유튜브)
+    - https://www.youtube.com/watch?v=WUM97xmi4qA
+  - Cursor rules(짐코딩 유튜브)
+    - https://www.youtube.com/watch?v=jdrloBg0Sbk
+
+
+- Claude Task Master: https://www.youtube.com/watch?v=p-FucXNL9Lc
+  - 설치
+    - CLI Installtion: npm 이용. 편하게 사용.
+      - task-master init(프로젝트 초기화)
+      - task-master parse-prd(PRD 파싱 후 작업 생성)
+    - MCP Integration: 작업 요청 시 편하다.
+```
+
+====================================
+```
+<< 이 강의가 추구하는 본질 >>
+[강의 핵심 워크플로우]
+STEP1   ->  STEP2   ->  STEP3
+분석(수집)    계획          구현
+
+- 가장 중요한 부분은 계획. 컨텍스트를 수집하고, 복잡한 문제를 실행 가능한 단위로 잘게 쪼개는 것.
+- 계획을 얼마나 잘 세우느냐 = AI 개발의 결과물
+- 계획을 세우는 방법은 하나가 아니다.
+
+[방법]
+1) Plan Mode
+ AI와 대화하며 계획을 세우는 방법
+2) Task Master vs Shrimp Task Manager
+- 작업을 자동으로 쪼개주고 상태를 추적해주는 외부 도구
+3) ROADMAP.md
+- 외부 도구 없이 직접 작성. 문제를 더 깊이 이해하게 된다.
+
+- 본인에게 맞는 방법을 찾아가면 된다.
+- 주요 도구
+  1) oh-my-claudecode
+  2) OpenClaw
+  3) superpowers
+- 이 강의 본질은 클로드 코드 스펙을 공식 문서 기반으로 깊이 학습하고 AI 개발 워크플로우에 녹이는 것
+- 앞으로 다룰 강의: Harness Engineering 강의
+- 이 기준으로 선별한 추가 강의: 클로드 콛의 스펙을 깊이 있게 다루는 강의들
+  1) 컨텍스트 엔지니어링
+  2) Agent Teams
+  3) 하네스 엔지어링
+
+```
+
+====================================
+```
 << Notion 기반 온라인 견적서 - 메타프롬프트 활용 PRD 생성(+프롬프트 엔지니어링) >>
 
 # PRD SubAgent 생성
