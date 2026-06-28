@@ -32,6 +32,122 @@
 
 ====================================
 ```
+<< 작업관리 도구(Task Manager) - Shrimp Task Manager(짐코딩 유튜브) >>
+
+[일반]
+- 공식 홈페이지: https://cjo4m06.github.io/mcp-shrimp-task-manager/?utm_source=chatgpt.com
+
+[설치]
+- cursor.ai 도구의 mcp tools 에 shrimp Task Manager 등록
+    "shrimp-task-manager": {
+      "command": "npx",
+      "args": ["-y", "mcp-shrimp-task-manager"],
+      "env": {
+        "DATA_DIR": "/Users/jinsu.kim/ShrimpData", // 절대 경로 - 프로젝트 폴더를 자동으로 생성
+        "TEMPLATES_USE": "en",
+        "ENABLE_GUI": "false"
+      }
+    }
+
+
+[init_project_rules]
+- 프로젝트 표준을 설정하거나 업데이트.
+  - 새로운 대규모 프로젝트 시작
+  - 새 팀원 온보딩
+  - 주요 아키텍처 변경 구현
+  - 새로운 개발 관련 채택
+
+[tool_task]
+- Claude Code나 Cursor에서 사용하는 "도구(tool)" 이름
+- 그래서 공식 문서를 보면
+Tools
+ ├─ plan_task
+ ├─ execute_task
+ ├─ verify_task
+ └─ ...
+ 처럼 소개되어 있음.
+ - 관련 문서: https://github.com/cjo4m06/mcp-shrimp-task-manager/blob/main/docs/tools.md
+  - 아래의 Available Toos 선택후 나온 문서
+    📚 Documentation
+      📖 Full Documentation
+      🛠️ Available Tools
+      🤖 Agent Management
+      🎨 Prompt Customization
+      🔧 API Reference
+
+[execute_task]
+- 계획한대로 실행.
+
+[research_mode]
+- 연구 및 조사가 더 필요하면 활용.
+
+[analyze_task]
+- Deep analysis of task requirements => 작업 요구사항을 심층 분석합니다.
+
+[reflect_task]
+- Review and improve task approach => 작업 수행 방식을 검토하고 개선합니다.
+
+[split_tasks]
+- 복잡한 작업을 세부 작업으로 분해합니다.
+
+[list_tasks]
+Display all tasks with status => 상태와 함께 모든 작업을 표시합니다.
+- 다시 한번 더 확인
+
+[update_task]
+Modify task details => 작업의 세부 내용을 수정합니다.
+
+[verify_task]
+Validate task completion => 작업 완료 여부를 검증합니다.
+
+[참고링크]
+👉 Shrimp: https://glama.ai/mcp/servers/@cjo4m06/mcp-shrimp-task-manager?locale=ko-KR
+👉 MCP 설치: https://youtu.be/Yc7yEAF0emA
+👉 커서 AI 설치: https://youtu.be/_oEhh8666pA
+👉 커서 Rules: https://youtu.be/jdrloBg0Sbk
+
+[처리 순서]
+1) init_project_rules: 프로젝트 표준 설정
+2) tool_task: 종합적인 계획 수립
+3) execute_task: 수립된 계획 실행
+
+[실습]
+1) 프롬프트: cursor.ai chat
+init_project_rules
+수영 스타일을 16가지 mbti 타입으로 분석해주는 웹앱을 만들고 싶어
+- React + TypeScript + TailwindCSS
+- 캐릭터별 결과 페이지 필요, 소셜 공유 기능 포함
+- 애니메이션, 트랜지션 효과
+
+2) 프롬프트: 
+plan_task
+1주 안에 개발할 수 있도록 계획을 세워줘!
+
+3) 프롬프트
+list_tasks 현재 진행 상황을 알려줘.
+
+4) 프롬프트: execute_task 이용해서 명시적으로 지시.
+execute_task 프로젝트 스캘폴딩 및 환경 설정
+
+5) 프롬프트: 어떤 작업이 남았지는지 확인.
+list_tasks 현재 진행 상황을 알려줘.
+
+6) 프롬프트: 연속모드(연속적으로 실행하게 한다)
+연속 모드로 모든 작업을 실행해줘~!
+
+7) 프롬프트: 진행 중인 작업 완료
+execute_task {ID 값}
+진행중인 작업을 완료해주세요!
+
+8) 프롬프트: 마지막 소셜 기능
+execute_task
+
+[기본 사용법]
+init_project_rules -> plan_task -> execute_task -> verify_task
+
+[고급 사용법]
+init_prjoejct_rules -> research_mode -> plan_task -> analyze_task -> reflect_task -> split_tasks -> execute_task -> verify_task
+
 ```
 
 ====================================
@@ -125,7 +241,7 @@
 
 ====================================
 ```
-<< 작업관리 도구(Task Manager) -  laude Task Master >>
+<< 작업관리 도구(Task Manager) -  Claude Task Master >>
 [설치]
 - 전역으로 설치
 - 전역 설치 후 실행 시 react 의존성 있으면 react 도 전역으로 설치
